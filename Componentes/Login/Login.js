@@ -34,13 +34,13 @@ class Login extends Component {
           }}
         >
           <ImageBackground
-            source={require("../assets/f41.png")}
+            source={require("../../assets/f41.png")}
             style={styles.backgroundImage}
           />
 
           <View style={styles.logo}>
             <Image
-              source={require("../../assets/f41.png")}
+              source={require("../../assets/logo.png")}
               style={styles.imglogo}
             />
             <Text style={styles.logoText}>DrugSoft</Text>
