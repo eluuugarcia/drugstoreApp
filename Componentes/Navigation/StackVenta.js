@@ -1,0 +1,34 @@
+import { createStackNavigator } from "react-navigation";
+import CargarProductos from "./CargarProductos";
+import Venta from "./Venta";
+import LeerProductos from "./LeerProductos";
+import BuscarProductos from "./Buscar Productos/BuscarProductos";
+
+const StackVenta = createStackNavigator({
+  Venta: {
+    screen: Venta,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuscarProductos: {
+    screen: BuscarProductos
+  },
+  CargarProductos: {
+    screen: CargarProductos
+  },
+  LeerProductos: {
+    screen: LeerProductos
+  }
+});
+
+StackVenta.navigationOptions = ({ navigation }) => {
+  const { routeName } = navigation.state.routes[navigation.state.index];
+  const navigationOptions = {};
+  if (routeName === "LeerProductos") {
+    navigationOptions.tabBarVisible = false;
+  }
+  return navigationOptions;
+};
+
+export { StackVenta };
