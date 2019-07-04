@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { FlatList, Text, View } from "react-native";
-import CartProductListItem from "./Producto";
+import CartProductListItem from "../Producto";
 import SearchProductListItem from "./SearchProductListItem";
-import ModalAddProduct from "./ModalAddProduct";
+import ModalAddProduct from "../Carrito/ModalAddProduct";
 
 const renderItemSearch = ({ item }) => (
   <SearchProductListItem producto={item} />

@@ -2,11 +2,11 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import React from 'react';
 import { Icon } from 'galio-framework';
-import { StackVenta } from './Venta/StackVenta';
-import Stock from './Stock/Stock';
-import { StackInforme } from './Informe/StackInforme';
-import { StackClientes } from './Clientes/StackClientes';
-import MiUsuario from './Usuario/MiUsuario';
+import { StackVenta } from './StackVenta';
+import Stock from '../Stock/Stock';
+import { StackInforme } from './StackInforme';
+import { StackClientes } from './StackClientes';
+import MiUsuario from '../Usuario/MiUsuario';
 
 
 const Nav = createMaterialBottomTabNavigator(

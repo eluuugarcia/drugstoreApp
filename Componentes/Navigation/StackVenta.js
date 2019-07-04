@@ -1,8 +1,8 @@
 import { createStackNavigator } from "react-navigation";
-import CargarProductos from "./CargarProductos";
-import Venta from "./Venta";
-import LeerProductos from "./LeerProductos";
-import BuscarProductos from "./Buscar Productos/BuscarProductos";
+import CargarProductos from "../Venta/Agregar Productos/CargarProductos";
+import Venta from "../Venta/Venta";
+import LeerProductos from "../Venta/Leer Productos/LeerProductos";
+import BuscarProductos from "../Venta/Buscar Productos/BuscarProductos";
 
 const StackVenta = createStackNavigator({
   Venta: {

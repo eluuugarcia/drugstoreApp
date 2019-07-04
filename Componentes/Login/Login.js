@@ -13,8 +13,8 @@ import {
 import { connect } from "react-redux";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 import LoginForm from "./login-form";
-import ErrorModal from "../Componentes/GlobalUtils/ErrorModal";
-import Loading from "../Componentes/GlobalUtils/Loading";
+import ErrorModal from "../GlobalUtils/ErrorModal";
+import Loading from "../GlobalUtils/Loading";
 
 // create a component
 class Login extends Component {
@@ -40,7 +40,7 @@ class Login extends Component {
 
           <View style={styles.logo}>
             <Image
-              source={require("../assets/logo.png")}
+              source={require("../../assets/f41.png")}
               style={styles.imglogo}
             />
             <Text style={styles.logoText}>DrugSoft</Text>

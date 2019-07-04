@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
-import MiUsuario from './MiUsuario';
-import Logout from './Logout';
+import MiUsuario from '../Usuario/MiUsuario';
+import Logout from '../Usuario/Logout';
 
 
 const StackUsuario = createStackNavigator({

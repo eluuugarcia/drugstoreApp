@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
-import Estadisticas from './Estadisticas';
-import Graficos from './Graficos';
-import Tablas from './Tablas';
+import Estadisticas from '../Informe/Estadisticas';
+import Graficos from '../Informe/Graficos';
+import Tablas from '../Informe/Tablas';
 
 
 const StackInforme = createStackNavigator({

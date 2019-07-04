@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation';
-import Stock from './Stock';
+import Stock from '../Stock/Stock';
 
 
 const StackStock = createStackNavigator({

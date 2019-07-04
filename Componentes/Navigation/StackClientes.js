@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation';
-import Clientes from './Clientes';
+import Clientes from '../Clientes/Clientes';
 
 
 const StackClientes = createStackNavigator({

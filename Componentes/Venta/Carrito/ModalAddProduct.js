@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Text, TouchableOpacity } from "react-native";
-import { Button, Paragraph, Dialog } from "react-native-paper";
+import { View, Text } from "react-native";
+import { Button } from "react-native-paper";
 import Modal from "react-native-modal";
-import CounterCard from "./CounterCard";
 import CounterButton from "./CounterButton";
-import { addProductToCart } from "../../Redux/Actions/actionVentas";
+import { addProductToCart } from "../../../Redux/Actions/actionVentas";
 
 class ErrorModal extends Component {
   state = {

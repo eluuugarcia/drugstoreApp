@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View } from "react-native";
-import Login from "./NoAuth/Login";
-import { NavBar } from "./Componentes/Nav";
+import Login from "./Componentes/Login/Login";
+import { NavBar } from "./Componentes/Navigation/Nav";
 
 function mapStateToProps(state) {
   return { token: state.reducerSession.token };
