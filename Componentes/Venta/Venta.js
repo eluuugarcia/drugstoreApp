@@ -1,20 +1,33 @@
 // import liraries
 import React, { Component } from "react";
-import { View, StyleSheet, Button, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import {
   MaterialCommunityIcons,
   FontAwesome,
   MaterialIcons
 } from "@expo/vector-icons";
 import { connect } from "react-redux";
-import { Header, Title, Right, Body, Animated } from "native-base";
+import { Header, Title, Right, Body } from "native-base";
 import { ListItem } from "react-native-elements";
 
 import TouchableScale from "react-native-touchable-scale";
 import { LinearGradient } from "expo";
-
+import Carrito from "./Carrito/Carrito";
+import { Button } from "react-native-paper";
 // create a component
 class Venta extends Component {
+  state = {
+    cartVisible: false
+  };
+
+  openCart = () => {
+    this.setState({ cartVisible: true });
+  };
+
+  closeCart = () => {
+    this.setState({ cartVisible: false });
+  };
+
   render() {
     const { navigation } = this.props;
 
@@ -25,12 +38,14 @@ class Venta extends Component {
             <Title style={{ fontWeight: "bold" }}>Nueva Venta</Title>
           </Body>
           <Right>
-            <MaterialCommunityIcons
-              active
-              name="cart"
-              color="white"
-              size={32}
-            />
+            <TouchableOpacity onPress={() => this.openCart()}>
+              <MaterialCommunityIcons
+                active
+                name="cart"
+                color="white"
+                size={32}
+              />
+            </TouchableOpacity>
           </Right>
         </Header>
         <View style={styles.container}>
@@ -148,6 +163,11 @@ class Venta extends Component {
             chevron
           />
         </View>
+        <Carrito
+          closeCart={this.closeCart}
+          cartVisible={this.state.cartVisible}
+          cartProducts={this.props.cartProducts}
+        />
       </View>
     );
   }
@@ -183,7 +203,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return { productos: state.reducerProductos.productos };
+  return {
+    productos: state.reducerProductos.productos,
+    cartProducts: state.reducerCarrito.cart
+  };
 }
 const mapDispatchToProps = dispatch => ({
   getProductos: () => {

@@ -2,24 +2,9 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { SearchBar } from "react-native-elements";
-import {
-  Button,
-  Icon,
-  Container,
-  Header,
-  Title,
-  Content,
-  Left,
-  Right,
-  Body,
-  Item,
-  Input
-} from "native-base";
+import { Container } from "native-base";
 import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
-import ProductsList from "./ProductsList";
-import { ListItem } from "react-native-elements";
-import { Card, Thumbnail } from "native-base";
 import SearchedProducts from "./SearchedProducts";
 
 // create a component
@@ -159,10 +144,7 @@ class BuscarProductos extends Component {
               </View>
             </View>
           ) : (
-            <SearchedProducts
-              searchedProducts={this.state.searchProducts}
-              allProducts={this.props.productos}
-            />
+            <SearchedProducts searchedProducts={this.state.searchProducts} />
           )}
         </View>
       </Container>

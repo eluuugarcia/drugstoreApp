@@ -26,18 +26,18 @@ class Login extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <ImageBackground
+          source={require("../../assets/f41.png")}
+          style={styles.backgroundImage}
+        />
         <View
           style={{
             flex: 1,
             justifyContent: "center",
-            alignContent: "center"
+            alignContent: "center",
+            alignItems: "center"
           }}
         >
-          <ImageBackground
-            source={require("../../assets/f41.png")}
-            style={styles.backgroundImage}
-          />
-
           <View style={styles.logo}>
             <Image
               source={require("../../assets/logo.png")}
@@ -57,7 +57,8 @@ class Login extends Component {
         <View
           style={{
             position: "absolute",
-            flex: 100
+            width: "100%",
+            height: "100%"
           }}
         >
           <Loading />
@@ -74,29 +75,21 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: "cover"
+    resizeMode: "center",
+    position: "absolute",
+    width: "100%",
+    height: "100%"
   },
   loginForm: {
-    flex: 4,
-    position: "absolute",
-    // paddingHorizontal: 30,
-    top: 200,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    marginTop: 30,
+    flex: 1,
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginVertical: 30
   },
   logo: {
-    flex: 1,
-    position: "absolute",
-    top: 0,
-    paddingHorizontal: 118,
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center"
+    flex: 0.5,
+    alignItems: "center"
   },
   imglogo: {
     width: 40,

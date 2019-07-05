@@ -51,7 +51,7 @@ function Producto(props) {
       chevron={
         <View>
           <Text style={{ fontWeight: "bold", color: "#1d9eb1", fontSize: 18 }}>
-            ${props.producto.precioVentaMinorista}
+            ${props.producto.precioVentaMayorista}
           </Text>
         </View>
       }

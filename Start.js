@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View } from "react-native";
+import { View, StatusBar } from "react-native";
 import Login from "./Componentes/Login/Login";
 import { NavBar } from "./Componentes/Navigation/Nav";
 
