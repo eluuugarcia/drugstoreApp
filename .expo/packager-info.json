@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 26741,
-  "expoServerNgrokUrl": "https://8y-zrx.eluuugarcia.drugapp.exp.direct",
-  "packagerNgrokUrl": "https://packager.8y-zrx.eluuugarcia.drugapp.exp.direct",
-  "ngrokPid": 26821,
+  "packagerPort": 19004,
+  "packagerPid": 20662,
+  "expoServerNgrokUrl": "https://ri-uui.eluuugarcia.drugapp.exp.direct",
+  "packagerNgrokUrl": "https://packager.ri-uui.eluuugarcia.drugapp.exp.direct",
+  "ngrokPid": 20859,
   "webpackServerPort": null
 }

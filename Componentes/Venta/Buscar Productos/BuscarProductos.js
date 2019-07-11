@@ -2,8 +2,14 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { SearchBar } from "react-native-elements";
-import { Container } from "native-base";
-import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { Container, Fab } from "native-base";
+import Carrito from "../Carrito/Carrito";
+import {
+  Feather,
+  FontAwesome,
+  MaterialIcons,
+  MaterialCommunityIcons
+} from "@expo/vector-icons";
 import { connect } from "react-redux";
 import SearchedProducts from "./SearchedProducts";
 
@@ -64,6 +70,10 @@ class BuscarProductos extends Component {
 
   render() {
     const { navigation } = this.props;
+
+    goToSearchProducts = () => {
+      this.props.closeCart();
+    };
 
     return (
       <Container style={{ backgroundColor: "#f2f2f2" }}>
@@ -146,6 +156,22 @@ class BuscarProductos extends Component {
           ) : (
             <SearchedProducts searchedProducts={this.state.searchProducts} />
           )}
+          <Fab
+            active
+            style={{ backgroundColor: "#35377c" }}
+            position="bottomRight"
+          >
+            <MaterialCommunityIcons
+              active
+              name="cart"
+              color="white"
+              size={32}
+              onPress={() => {
+                console.log("se abre con el floating button");
+                this.props.openCart();
+              }}
+            />
+          </Fab>
         </View>
       </Container>
     );
@@ -178,6 +204,12 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   getProductos: () => {
     dispatch({ type: "GET_PRODUCTOS" });
+  },
+  openCart: () => {
+    dispatch({ type: "OPEN_CART" });
+  },
+  closeCart: () => {
+    dispatch({ type: "CLOSE_CART" });
   }
 });
 

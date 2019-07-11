@@ -12,7 +12,6 @@ class ErrorModal extends Component {
   };
 
   setCantidadProducto() {
-    console.log(this.props.productToAdd);
     const subtotal =
       this.props.productToAdd.precioVentaMayorista * this.state.counter;
     const newProduct = {
@@ -20,11 +19,12 @@ class ErrorModal extends Component {
       cantidad: this.state.counter,
       subtotal
     };
+    this.setState({ counter: 1 });
     this.props.addProductToCart(this.props.cart, newProduct);
+    this.props.cancelProductToAdd();
   }
 
   increaseCount = () => {
-    console.log("Product to add: ");
     this.setState({ counter: this.state.counter + 1 });
   };
 
@@ -127,7 +127,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: "CANCEL_PRODUCT_TO_ADD" });
   },
   addProductToCart: (cart, product) => {
-    console.log("hola");
     dispatch(addProductToCart(cart, product));
   }
 });

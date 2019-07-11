@@ -3,9 +3,6 @@ export const updateCart = cart => {
 };
 
 export const addProductToCart = (cart, itemProduct) => dispatch => {
-console.log('soy el action');
-  console.log(itemProduct);
-
   const newCart = cart.slice();
   let isOnCart = false;
   newCart.forEach(item => {

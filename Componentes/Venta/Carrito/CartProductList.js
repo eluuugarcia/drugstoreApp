@@ -9,7 +9,6 @@ const keyExtractor = item => item.idProductoDeSucursal.toString();
 const itemSeparator = () => (
   <View
     style={{
-      flex: 1,
       borderWidth: 0.3,
       borderColor: "#a7a7a7"
     }}
@@ -22,11 +21,10 @@ function CartProductList(props) {
       style={{
         flex: 3,
         backgroundColor: "white",
-        marginVertical: 30,
         marginHorizontal: 30,
         borderRadius: 30,
         paddingHorizontal: 5,
-        paddingVertical: 20
+        paddingVertical: 10
       }}
     >
       <FlatList

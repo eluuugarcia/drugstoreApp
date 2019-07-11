@@ -1,32 +1,32 @@
 import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { SwipeRow, Button } from "native-base";
+import { Badge } from "react-native-elements";
 
 function Producto(props) {
   return (
     <View style={styles.container}>
       <SwipeRow
-        rightOpenValue={-60}
+        rightOpenValue={160}
         leftOpenValue={0}
         left={<View />}
         body={
           <View style={styles.producto}>
             <View style={styles.left}>
-              <View>
-                <Image
-                  style={{ width: 30, height: 30, marginRight: 20 }}
-                  source={{
-                    uri:
-                      "https://volumeintegration.com/wp-content/uploads/PackageIcon.png"
-                  }}
+              <View style={{ marginTop: 4 }}>
+                <Badge
+                  value={props.cartProduct.cantidad}
+                  badgeStyle={{ paddingVertical: 10, paddingHorizontal: 6 }}
+                  status="primary"
+                  textStyle={{ fontWeight: "600", fontSize: 14 }}
                 />
               </View>
 
-              <View>
+              <View style={{ marginLeft: 10 }}>
                 <View>
                   <Text style={styles.nombre} numberOfLines={1}>
-                    {props.cartProduct.cantidad} x {props.cartProduct.nombre}
+                    {props.cartProduct.nombre}
                   </Text>
                 </View>
                 <Text style={styles.codigo}>
@@ -56,8 +56,7 @@ const styles = StyleSheet.create({
   producto: {
     marginHorizontal: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 5
+    justifyContent: "space-between"
   },
   left: {
     flex: 1,
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   },
   nombre: {
     color: "#5f5f5f",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold"
   },
   codigo: {
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
   },
   precio: {
     color: "#1da1f2",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold"
   }
 });

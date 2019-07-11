@@ -13,23 +13,24 @@ import { ListItem } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 import { LinearGradient } from "expo";
 import Carrito from "./Carrito/Carrito";
-import { Button } from "react-native-paper";
+import { goToSearchProducts } from "../../Redux/Actions/actionCarrito";
+
+controlCart = () => {};
+
 // create a component
 class Venta extends Component {
   state = {
-    cartVisible: false
-  };
-
-  openCart = () => {
-    this.setState({ cartVisible: true });
-  };
-
-  closeCart = () => {
-    this.setState({ cartVisible: false });
+    cartVisible: false,
+    total: 0
   };
 
   render() {
     const { navigation } = this.props;
+
+    // goToSearchProducts = () => {
+    //   this.props.closeCart();
+    //   navigation.navigate("BuscarProductos");
+    // };
 
     return (
       <View style={{ flex: 1 }}>
@@ -38,7 +39,7 @@ class Venta extends Component {
             <Title style={{ fontWeight: "bold" }}>Nueva Venta</Title>
           </Body>
           <Right>
-            <TouchableOpacity onPress={() => this.openCart()}>
+            <TouchableOpacity onPress={() => this.props.openCart()}>
               <MaterialCommunityIcons
                 active
                 name="cart"
@@ -66,7 +67,6 @@ class Venta extends Component {
             ViewComponent={LinearGradient} // Only if no expo
             leftElement={
               <FontAwesome active name="search" color="white" size={30} />
-              // <Image style={{ width: 50, height: 50 }} source={{ uri: 'http://pluspng.com/img-png/search-button-png-search-button-icon-260.png' }} />
             }
             title="Buscar productos"
             titleStyle={{
@@ -100,7 +100,6 @@ class Venta extends Component {
             }}
             ViewComponent={LinearGradient}
             leftElement={
-              //  <Image style={{ width: 50, height: 50 }} source={{ uri: 'https://static.thenounproject.com/png/547392-200.png' }} />
               <MaterialCommunityIcons
                 active
                 name="barcode-scan"
@@ -163,11 +162,11 @@ class Venta extends Component {
             chevron
           />
         </View>
-        <Carrito
-          closeCart={this.closeCart}
-          cartVisible={this.state.cartVisible}
-          cartProducts={this.props.cartProducts}
-        />
+        {/* <Carrito
+          goToSearchProducts={this.props.goToSearchProducts(
+            this.props.navigation
+          )}
+        /> */}
       </View>
     );
   }
@@ -211,6 +210,15 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   getProductos: () => {
     dispatch({ type: "GET_PRODUCTOS" });
+  },
+  openCart: () => {
+    dispatch({ type: "OPEN_CART" });
+  },
+  closeCart: () => {
+    dispatch({ type: "CLOSE_CART" });
+  },
+  goToSearchProducts: navigation => {
+    dispatch(goToSearchProducts(navigation));
   }
 });
 

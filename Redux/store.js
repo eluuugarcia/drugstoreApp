@@ -15,8 +15,8 @@ import { composeWithDevTools } from "remote-redux-devtools";
 // Poner en blacklist lo que NO se quiere persistir
 const persistConfig = {
   key: "root",
-  blacklist: [form, reducerSession.sesionExist, reducerProductos],
-  storage
+  storage,
+  blacklist: ["openCart"]
 };
 
 const sagaMiddleware = createSagaMiddleware();

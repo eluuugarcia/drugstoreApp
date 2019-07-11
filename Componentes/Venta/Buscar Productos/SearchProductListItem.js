@@ -6,11 +6,9 @@ import { ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 
 const selectProduct = product => {
-  console.log(product);
   this.props.productToAdd(product);
 };
 function Producto(props) {
-  console.log(props);
   return (
     <ListItem
       key={props.producto.idProducto}

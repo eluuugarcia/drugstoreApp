@@ -13,7 +13,7 @@ import { Alert } from "react-native";
 // Configuracion de axios:
 // baseURL es la url general
 const configAxios = () => {
-  axios.defaults.baseURL = "http://08a0a55f.ngrok.io";
+  axios.defaults.baseURL = "http://746c1f92.ngrok.io";
   axios.defaults.headers["Content-Type"] = "application/json";
   axios.defaults.headers.Accept = "application/json";
 };
@@ -144,8 +144,6 @@ function* sagaRemovePreviousSession() {
 function* sagaGetProductos() {
   try {
     const { token } = yield select(state => state.reducerSession);
-    console.log("el tokeeeeeen");
-    console.log(token);
     const productos = yield call(getProductos, token);
     yield put({ type: "CARGAR_PRODUCTOS", productos });
   } catch (error) {
