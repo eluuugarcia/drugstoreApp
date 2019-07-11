@@ -13,7 +13,7 @@ import { Alert } from "react-native";
 // Configuracion de axios:
 // baseURL es la url general
 const configAxios = () => {
-  axios.defaults.baseURL = "http://746c1f92.ngrok.io";
+  axios.defaults.baseURL = "http://244b4a6b.ngrok.io";
   axios.defaults.headers["Content-Type"] = "application/json";
   axios.defaults.headers.Accept = "application/json";
 };

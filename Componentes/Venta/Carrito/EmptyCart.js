@@ -28,7 +28,6 @@ function EmptyCart(props) {
         style={{
           alignItems: "center",
           flex: 0.5,
-          //backgroundColor: "red",
           alignContent: "center",
           justifyContent: "center"
         }}
@@ -45,7 +44,7 @@ function EmptyCart(props) {
         <Button
           uppercase={false}
           mode="contained"
-          onPress={props.goToSearchProducts}
+          onPress={() => props.goToSearchProducts()}
         >
           Buscar productos
         </Button>

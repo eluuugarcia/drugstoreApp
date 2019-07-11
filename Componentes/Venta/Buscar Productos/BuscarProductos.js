@@ -71,10 +71,6 @@ class BuscarProductos extends Component {
   render() {
     const { navigation } = this.props;
 
-    goToSearchProducts = () => {
-      this.props.closeCart();
-    };
-
     return (
       <Container style={{ backgroundColor: "#f2f2f2" }}>
         <SearchBar
@@ -160,16 +156,15 @@ class BuscarProductos extends Component {
             active
             style={{ backgroundColor: "#35377c" }}
             position="bottomRight"
+            onPress={() => {
+              this.props.openCart();
+            }}
           >
             <MaterialCommunityIcons
               active
               name="cart"
               color="white"
               size={32}
-              onPress={() => {
-                console.log("se abre con el floating button");
-                this.props.openCart();
-              }}
             />
           </Fab>
         </View>

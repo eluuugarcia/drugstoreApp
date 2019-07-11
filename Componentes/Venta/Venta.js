@@ -15,8 +15,6 @@ import { LinearGradient } from "expo";
 import Carrito from "./Carrito/Carrito";
 import { goToSearchProducts } from "../../Redux/Actions/actionCarrito";
 
-controlCart = () => {};
-
 // create a component
 class Venta extends Component {
   state = {
@@ -26,11 +24,6 @@ class Venta extends Component {
 
   render() {
     const { navigation } = this.props;
-
-    // goToSearchProducts = () => {
-    //   this.props.closeCart();
-    //   navigation.navigate("BuscarProductos");
-    // };
 
     return (
       <View style={{ flex: 1 }}>
@@ -162,11 +155,11 @@ class Venta extends Component {
             chevron
           />
         </View>
-        {/* <Carrito
-          goToSearchProducts={this.props.goToSearchProducts(
-            this.props.navigation
-          )}
-        /> */}
+        <Carrito
+          goToSearchProducts={() =>
+            this.props.goToSearchProducts(this.props.navigation)
+          }
+        />
       </View>
     );
   }

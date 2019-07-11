@@ -19,7 +19,6 @@ class Carrito extends Component {
         swipeDirection="down"
         animationIn="slideInUp"
         onSwipeComplete={() => {
-          console.log("cerrado por swip");
           this.props.closeCart();
         }}
         style={styles.modal}
@@ -59,7 +58,6 @@ const styles = StyleSheet.create({
   },
   totalContainer: {
     flex: 0.2,
-    //backgroundColor: "white",
     marginVertical: 30,
     marginHorizontal: 30,
     borderRadius: 50,
