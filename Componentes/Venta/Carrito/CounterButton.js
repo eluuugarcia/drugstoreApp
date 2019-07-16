@@ -43,6 +43,18 @@ class CounterButton extends Component {
     }).start(() => this.state.tapAnimation.setValue(0));
   };
 
+  componentDidMount = () => {
+    console.log("7483975348967358");
+    if (!this.props.new) {
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        duration: 0
+      }).start(() => {
+        this.setState({ open: 1 });
+      });
+    }
+  };
+
   render() {
     const incrementBoxScaleX = this.state.animation.interpolate({
       inputRange: [0, 1],

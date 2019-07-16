@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { FlatList, Text, View } from "react-native";
 import SearchProductListItem from "./SearchProductListItem";
-import ModalAddProductToCart from "../Carrito/ModalAddProductToCart";
 
 const renderItemSearch = ({ item }) => (
   <SearchProductListItem producto={item} />
@@ -29,7 +28,6 @@ function SearchProductList(props) {
         renderItem={renderItemSearch}
         ItemSeparatorComponent={itemSeparator}
       />
-      <ModalAddProductToCart />
     </View>
   );
 }

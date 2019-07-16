@@ -14,6 +14,9 @@ import TouchableScale from "react-native-touchable-scale";
 import { LinearGradient } from "expo";
 import Carrito from "./Carrito/Carrito";
 import { goToSearchProducts } from "../../Redux/Actions/actionCarrito";
+import ModalAddProduct from "./Carrito/ModalAddProduct";
+import ModalEditItemCart from "./Carrito/ModalEditItemCart";
+import Animation from "../GlobalUtils/Animation";
 
 // create a component
 class Venta extends Component {
@@ -53,7 +56,7 @@ class Venta extends Component {
             tension={100}
             activeScale={0.85}
             linearGradientProps={{
-              colors: ["#e3895b", "#923121"],
+              colors: ["#294769", "#234164"],
               start: [1, 0],
               end: [0.2, 0]
             }}
@@ -87,7 +90,7 @@ class Venta extends Component {
             tension={100}
             activeScale={0.85} //
             linearGradientProps={{
-              colors: ["#439cba", "#323471"],
+              colors: ["#727d90", "#6d7789"],
               start: [1, 0],
               end: [0.2, 0]
             }}
@@ -124,7 +127,7 @@ class Venta extends Component {
             tension={100}
             activeScale={0.85} //
             linearGradientProps={{
-              colors: ["#a44e95", "#371633"],
+              colors: ["#c2d1d9", "#b9cad2"],
               start: [1, 0],
               end: [0.2, 0]
             }}
@@ -160,6 +163,8 @@ class Venta extends Component {
             this.props.goToSearchProducts(this.props.navigation)
           }
         />
+        <ModalAddProduct />
+        <ModalEditItemCart />
       </View>
     );
   }

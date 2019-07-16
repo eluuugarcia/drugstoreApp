@@ -12,6 +12,14 @@ class Carrito extends Component {
     total: 0
   };
 
+  // shouldComponentUpdate(nextProps) {
+  //   const firstCart = this.props.cartProducts;
+  //   const nextCart = nextProps.cartProducts;
+  //   console.log(firstCart);
+  //   console.log(nextCart);
+  //   return firstCart === nextCart;
+  // }
+
   render() {
     return (
       <Modal

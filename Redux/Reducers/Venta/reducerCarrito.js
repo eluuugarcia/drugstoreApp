@@ -2,19 +2,20 @@ const initialState = {
   cart: [],
   openCart: false,
   totalCart: 0,
-  itemToEdit: null
+  itemToEdit: null,
+  ok: false
 };
 
-const calcularTotal = state => {
+const calcularTotal = cart => {
   let total = 0;
-  for (let i = 0; i < state.cart.length; i++) {
-    total = total + state.cart[i].subtotal;
+  for (let i = 0; i < cart.length; i++) {
+    total = total + cart[i].subtotal;
   }
   return total;
 };
 
 const openCart = state => {
-  return { ...state, openCart: true, totalCart: calcularTotal(state) };
+  return { ...state, openCart: true };
 };
 
 const closeCart = state => {
@@ -22,7 +23,12 @@ const closeCart = state => {
 };
 
 const newCart = (state, action) => {
-  return { ...state, cart: action.cart };
+  return {
+    ...state,
+    cart: action.cart,
+    totalCart: calcularTotal(action.cart),
+    ok: true
+  };
 };
 
 const emptyCart = state => {
@@ -31,6 +37,10 @@ const emptyCart = state => {
 
 const editItem = (state, action) => {
   return { ...state, itemToEdit: action.itemToEdit };
+};
+
+const cancelEditItem = state => {
+  return { ...state, itemToEdit: null };
 };
 
 const reducerCarrito = (state = initialState, action) => {
@@ -45,6 +55,8 @@ const reducerCarrito = (state = initialState, action) => {
       return closeCart(state);
     case "SET_ITEM_TO_EDIT":
       return editItem(state, action);
+    case "UNSET_ITEM_TO_EDIT":
+      return cancelEditItem(state);
     default:
       return state;
   }
