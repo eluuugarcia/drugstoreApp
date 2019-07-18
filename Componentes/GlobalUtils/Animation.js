@@ -8,7 +8,7 @@ class Animation extends React.Component {
     if (this.props.ok) {
       return (
         <LottieView
-          source={require("../../assets/animations/1798-check-animation.json")}
+          source={require("../../assets/animations/433-checked-done.json")}
           autoPlay
           loop
           //style={{ backgroundColor: "#000", position: "absolute", top: 0 }}

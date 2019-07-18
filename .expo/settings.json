@@ -1,7 +1,7 @@
 {
-  "hostType": "lan",
+  "hostType": "tunnel",
   "lanType": "ip",
-  "dev": true,
-  "minify": false,
-  "urlRandomness": "fb-t8v"
+  "dev": false,
+  "minify": true,
+  "urlRandomness": "k7-cmh"
 }

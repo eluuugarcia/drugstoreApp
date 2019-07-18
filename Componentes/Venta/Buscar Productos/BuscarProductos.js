@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { Container, Fab } from "native-base";
-import Carrito from "../Carrito/Carrito";
 import {
   Feather,
   FontAwesome,
@@ -12,6 +11,7 @@ import {
 } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import SearchedProducts from "./SearchedProducts";
+import { Badge } from "react-native-elements";
 
 // create a component
 class BuscarProductos extends Component {
@@ -160,12 +160,29 @@ class BuscarProductos extends Component {
               this.props.openCart();
             }}
           >
-            <MaterialCommunityIcons
-              active
-              name="cart"
-              color="white"
-              size={32}
-            />
+            <View>
+              <MaterialCommunityIcons
+                active
+                name="cart"
+                color="white"
+                size={30}
+              />
+              <Badge
+                containerStyle={{
+                  position: "absolute",
+                  top: -8,
+                  right: -6
+                }}
+                value={this.props.cartProducts.length}
+                badgeStyle={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 2,
+                  borderColor: "rgba(0, 0, 0, 0)"
+                }}
+                status="primary"
+                textStyle={{ fontWeight: "700", fontSize: 14 }}
+              />
+            </View>
           </Fab>
         </View>
       </Container>
@@ -193,7 +210,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return { productos: state.reducerProductos.productos };
+  return {
+    productos: state.reducerProductos.productos,
+    cartProducts: state.reducerCarrito.cart
+  };
 }
 
 const mapDispatchToProps = dispatch => ({

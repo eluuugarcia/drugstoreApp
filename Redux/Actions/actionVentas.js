@@ -6,13 +6,10 @@ export const addProductToCart = (cart, itemProduct) => dispatch => {
   const newCart = cart.slice();
   let isOnCart = false;
   newCart.forEach(item => {
-    console.log("yrwiueytiwue");
     if (item.idProductoDeSucursal === itemProduct.idProductoDeSucursal) {
       isOnCart = true;
       let index = newCart.indexOf(item);
       newCart.splice(index, 1);
-      // item.cantidad = item.cantidad + itemProduct.cantidad;
-      // item.subtotal = parseFloat((item.precio * item.cantidad).toFixed(2));
       newCart.push({ ...itemProduct });
     }
   });

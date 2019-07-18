@@ -26,9 +26,16 @@ const newCart = (state, action) => {
   return {
     ...state,
     cart: action.cart,
-    totalCart: calcularTotal(action.cart),
-    ok: true
+    totalCart: calcularTotal(action.cart)
   };
+};
+
+const setCheckAnimation = state => {
+  return { ...state, ok: true };
+};
+
+const unsetCheckAnimation = state => {
+  return { ...state, ok: false };
 };
 
 const emptyCart = state => {
@@ -57,6 +64,10 @@ const reducerCarrito = (state = initialState, action) => {
       return editItem(state, action);
     case "UNSET_ITEM_TO_EDIT":
       return cancelEditItem(state);
+    case "SET_CHECK_ANIMATION":
+      return setCheckAnimation(state);
+    case "UNSET_CHECK_ANIMATION":
+      return unsetCheckAnimation(state);
     default:
       return state;
   }
