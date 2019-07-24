@@ -12,14 +12,6 @@ class Carrito extends Component {
     total: 0
   };
 
-  // shouldComponentUpdate(nextProps) {
-  //   const firstCart = this.props.cartProducts;
-  //   const nextCart = nextProps.cartProducts;
-  //   console.log(firstCart);
-  //   console.log(nextCart);
-  //   return firstCart === nextCart;
-  // }
-
   render() {
     return (
       <Modal
@@ -33,6 +25,7 @@ class Carrito extends Component {
       >
         <View style={styles.container}>
           <HeaderCarrito closeCart={this.props.closeCart} />
+
           {this.props.cartProducts.length > 0 ? (
             <CartWithProducts
               cartProducts={this.props.cartProducts}

@@ -53,16 +53,17 @@ class Login extends Component {
 
           <ErrorModal />
         </View>
-
-        <View
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%"
-          }}
-        >
-          <Loading />
-        </View>
+        {this.props.loading ? (
+          <View
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%"
+            }}
+          >
+            <Loading />
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -129,7 +130,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+function mapStateToProps(state) {
+  return { loading: state.reducerLoading.loading };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);

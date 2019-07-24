@@ -13,8 +13,8 @@ function Options(props) {
       <VentaOption
         title="Buscar Productos"
         icon={<FontAwesome active name="search" color="white" size={30} />}
-        rightColor="#234164"
-        leftColor="#183352"
+        rightColor="#ed3d3c"
+        leftColor="#ed548b"
         navigate={props.buscarProductos}
       />
       <VentaOption
@@ -27,8 +27,8 @@ function Options(props) {
             size={32}
           />
         }
-        rightColor="#727d90"
-        leftColor="#6d7789"
+        rightColor="#a94b8c"
+        leftColor="#45448f"
         navigate={props.escanearProductos}
       />
       <VentaOption
@@ -36,8 +36,8 @@ function Options(props) {
         icon={
           <MaterialIcons active name="library-add" color="white" size={30} />
         }
-        rightColor="#c2d1d9"
-        leftColor="#b9cad2"
+        rightColor="#155eaa"
+        leftColor="#32a4dd"
         navigate={() => console.log("not implemented jiji")}
       />
     </View>
@@ -47,7 +47,7 @@ function Options(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#efefef",
+    //backgroundColor: "#efefef",
     paddingVertical: 50,
     paddingHorizontal: 20,
     alignContent: "flex-end",

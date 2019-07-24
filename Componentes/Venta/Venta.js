@@ -1,9 +1,14 @@
 // import liraries
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
-import { Header, Title, Right, Body } from "native-base";
+import { Header, Title, Right, Body, Text } from "native-base";
 
 import Carrito from "./Carrito/Carrito";
 import { goToSearchProducts } from "../../Redux/Actions/actionCarrito";
@@ -11,6 +16,7 @@ import ModalAddProduct from "./Carrito/ModalAddProduct";
 import ModalEditItemCart from "./Carrito/ModalEditItemCart";
 import Options from "./Venta/Options";
 import { Badge } from "react-native-elements";
+import { SwipeRow, Button, Icon } from "native-base";
 
 // create a component
 class Venta extends Component {
@@ -55,10 +61,26 @@ class Venta extends Component {
             </TouchableOpacity>
           </Right>
         </Header>
+
+        {/* <ImageBackground
+            source={{
+              uri:
+                "https://img.heypik.com/background-image/20190122/eps-ui-vector-dot-line-white-vector-background-heypik-90U43W4.jpg?x-oss-process=image/quality,q_70/watermark,image_c2h1aXlpbl9uZXcucG5n,g_center"
+            }}
+            style={{
+              flex: 1,
+              resizeMode: "center",
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              opacity: 0.3
+            }}
+          /> */}
         <Options
           buscarProductos={() => navigation.navigate("BuscarProductos")}
           escanearProductos={() => navigation.navigate("LeerProductos")}
         />
+
         <Carrito
           goToSearchProducts={() =>
             this.props.goToSearchProducts(this.props.navigation)

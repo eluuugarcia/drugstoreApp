@@ -10,6 +10,7 @@ function Producto(props) {
       onPress={() => {
         props.editItem(props.cartProduct);
       }}
+      onLongPress={() => console.log("on long press")}
     >
       <View style={styles.producto}>
         <View style={styles.left}>
@@ -26,8 +27,8 @@ function Producto(props) {
             />
           </View>
 
-          <View style={{ marginLeft: 10 }}>
-            <View>
+          <View>
+            <View style={{ marginRight: 20 }}>
               <Text style={styles.nombre} numberOfLines={1}>
                 {props.cartProduct.nombre}
               </Text>
@@ -56,11 +57,13 @@ const styles = StyleSheet.create({
   nombre: {
     color: "#5f5f5f",
     fontSize: 17,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    marginHorizontal: 10
   },
   codigo: {
     color: "#828282",
-    fontSize: 13
+    fontSize: 13,
+    marginLeft: 10
   },
   right: {
     flex: 0.5,

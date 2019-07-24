@@ -15,19 +15,6 @@ class Start extends Component {
       return (
         <View style={{ flex: 1, marginTop: 19 }}>
           <NavBar />
-          {this.props.ok ? (
-            <View
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#000",
-                opacity: 0.5
-              }}
-            >
-              <Animation />
-            </View>
-          ) : null}
         </View>
       );
     }

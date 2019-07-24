@@ -16,7 +16,8 @@ function PermisosCamara(props) {
       >
         <View
           style={{
-            flex: 2
+            flex: 2,
+            marginTop: 20
           }}
         >
           <Text style={styles.permisosText}>
@@ -25,7 +26,11 @@ function PermisosCamara(props) {
         </View>
 
         <View style={{ flex: 3, marginHorizontal: 80 }}>
-          <Button style={styles.permisosButton} mode="contained">
+          <Button
+            style={styles.permisosButton}
+            mode="contained"
+            onPress={() => props.darPermiso()}
+          >
             Dar permiso
           </Button>
         </View>

@@ -1,7 +1,7 @@
 {
-  "hostType": "tunnel",
+  "hostType": "lan",
   "lanType": "ip",
-  "dev": false,
-  "minify": true,
-  "urlRandomness": "k7-cmh"
+  "dev": true,
+  "minify": false,
+  "urlRandomness": "uf-iu6"
 }

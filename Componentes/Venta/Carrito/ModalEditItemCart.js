@@ -5,7 +5,10 @@ import { Button } from "react-native-paper";
 import Modal from "react-native-modal";
 import CounterButton from "./CounterButton";
 import { cancelProductToEdit } from "../../../Redux/Actions/actionCarrito";
-import { addProductToCart } from "../../../Redux/Actions/actionVentas";
+import {
+  editProductToCart,
+  removeProductToCart
+} from "../../../Redux/Actions/actionVentas";
 
 class ModalEditItemCart extends Component {
   state = {
@@ -21,29 +24,7 @@ class ModalEditItemCart extends Component {
       cantidad,
       subtotal
     };
-    // let producto = {
-    //   idProductoDeSucursal: 1111,
-    //   producto: {
-    //     idProducto: 7791070002102,
-    //     marca: { idMarca: 1, nombre: "Coca" },
-    //     nombre: "Natura 900ml.",
-    //     descripcion: null,
-    //     idTipo: 1,
-    //     idMarca: 1
-    //   },
-    //   cantidadContiene: null,
-    //   cantidadEnStock: 100,
-    //   precioVentaMayorista: "43.00",
-    //   precioVentaMinorista: "64.00",
-    //   activo: true,
-    //   urlImagen: null,
-    //   idProducto: 7790272001005,
-    //   idUnidadMedida: 1,
-    //   idSucursal: 1,
-    //   cantidad: 3,
-    //   subtotal: 3
-    // };
-    console.log(newProduct);
+
     this.setState({ counter: 1 });
     this.props.editItemCart(this.props.cart, newProduct);
     this.props.cancelProductToEdit();
@@ -124,17 +105,32 @@ class ModalEditItemCart extends Component {
                 />
               </View>
             </View>
-
-            <Button
-              style={{ borderRadius: 0 }}
-              color="rgb(49, 186, 201)"
-              mode="contained"
-              onPress={() => this.setCantidadProducto()}
-            >
-              <Text style={{ color: "white", fontSize: 22 }}>
-                MODIFICAR ${this.props.itemToEdit.precio * this.state.counter}
-              </Text>
-            </Button>
+            <View style={{ flexDirection: "row" }}>
+              <Button
+                style={{ borderRadius: 0, flex: 1 }}
+                color="rgba(184, 79, 78, 1)"
+                mode="contained"
+                onPress={() => {
+                  this.props.cancelProductToEdit();
+                  this.props.removeProductToCart(
+                    this.props.cart,
+                    this.props.itemToEdit
+                  );
+                }}
+              >
+                <Text style={{ color: "white", fontSize: 18 }}>ELIMINAR</Text>
+              </Button>
+              <Button
+                style={{ borderRadius: 0 }}
+                color="rgb(49, 186, 201)"
+                mode="contained"
+                onPress={() => this.setCantidadProducto()}
+              >
+                <Text style={{ color: "white", fontSize: 18 }}>
+                  MODIFICAR ${this.props.itemToEdit.precio * this.state.counter}
+                </Text>
+              </Button>
+            </View>
           </View>
         </Modal>
       );
@@ -156,7 +152,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(cancelProductToEdit());
   },
   editItemCart: (cart, item) => {
-    dispatch(addProductToCart(cart, item));
+    dispatch(editProductToCart(cart, item));
+  },
+  removeProductToCart: (cart, item) => {
+    dispatch(removeProductToCart(cart, item));
   }
 });
 
