@@ -2,7 +2,7 @@ export const updateCart = cart => {
   return { type: "UPDATE_CART", cart };
 };
 
-export const addProductToCart = (cart, itemProduct) => dispatch => {
+export const addProductToCart = (cart, itemProduct, mayorista) => dispatch => {
   const newCart = cart.slice();
   let isOnCart = false;
   newCart.forEach(item => {
@@ -18,18 +18,23 @@ export const addProductToCart = (cart, itemProduct) => dispatch => {
       idProductoDeSucursal: itemProduct.idProductoDeSucursal,
       idProducto: itemProduct.producto.idProducto,
       nombre: itemProduct.producto.nombre,
-      precio: itemProduct.precioVentaMayorista,
+      //precio: itemProduct.precioVentaMayorista,
       marca: itemProduct.producto.marca.nombre,
       cantidad: itemProduct.cantidad,
       subtotal: parseFloat(itemProduct.subtotal.toFixed(2))
     };
+    if (mayorista) {
+      newProducto.precio = itemProduct.precioVentaMayorista;
+    } else {
+      newProducto.precio = itemProduct.precioVentaMinorista;
+    }
     newCart.push({ ...newProducto });
   }
 
   return dispatch(updateCart(newCart));
 };
 
-export const editProductToCart = (cart, itemProduct) => dispatch => {
+export const editProductToCart = (cart, itemProduct, mayorista) => dispatch => {
   const newCart = cart.slice();
   let isOnCart = false;
   newCart.forEach(item => {
@@ -46,11 +51,16 @@ export const editProductToCart = (cart, itemProduct) => dispatch => {
       idProductoDeSucursal: itemProduct.idProductoDeSucursal,
       idProducto: itemProduct.producto.idProducto,
       nombre: itemProduct.producto.nombre,
-      precio: itemProduct.precioVentaMayorista,
+      //precio: itemProduct.precioVentaMayorista,
       marca: itemProduct.producto.marca.nombre,
       cantidad: itemProduct.cantidad,
       subtotal: parseFloat(itemProduct.subtotal.toFixed(2))
     };
+    if (mayorista) {
+      newProducto.precio = itemProduct.precioVentaMayorista;
+    } else {
+      newProducto.precio = itemProduct.precioVentaMinorista;
+    }
     newCart.push({ ...newProducto });
   }
 

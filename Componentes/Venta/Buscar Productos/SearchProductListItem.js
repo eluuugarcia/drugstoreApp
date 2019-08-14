@@ -11,7 +11,7 @@ const selectProduct = product => {
 function Producto(props) {
   return (
     <ListItem
-      key={props.producto.idProducto}
+      key={props.producto.producto.idProducto}
       Component={TouchableScale}
       friction={90}
       tension={100}
@@ -44,12 +44,17 @@ function Producto(props) {
       titleStyle={{ color: "#35377c", fontWeight: "bold" }}
       subtitleStyle={{ color: "white" }}
       subtitle={
-        <Text style={{ color: "#7a7bb1" }}>#{props.producto.idProducto}</Text>
+        <Text style={{ color: "#7a7bb1" }}>
+          #{props.producto.producto.idProducto}
+        </Text>
       }
       chevron={
         <View>
           <Text style={{ fontWeight: "bold", color: "#1d9eb1", fontSize: 18 }}>
-            ${props.producto.precioVentaMayorista}
+            $
+            {props.mayorista
+              ? props.producto.precioVentaMayorista
+              : props.producto.precioVentaMinorista}
           </Text>
         </View>
       }
@@ -63,7 +68,13 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
+const mapStateToProps = state => {
+  return {
+    mayorista: state.reducerVenta.mayorista
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Producto);

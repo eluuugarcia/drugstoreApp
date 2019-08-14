@@ -12,15 +12,26 @@ class ModalAddProduct extends Component {
   };
 
   setCantidadProducto() {
-    const subtotal =
-      this.props.productToAdd.precioVentaMayorista * this.state.counter;
+    let subtotal = 0;
+    if (this.props.mayorista) {
+      subtotal =
+        this.props.productToAdd.precioVentaMayorista * this.state.counter;
+    } else {
+      subtotal =
+        this.props.productToAdd.precioVentaMinorista * this.state.counter;
+    }
+
     const newProduct = {
       ...this.props.productToAdd,
       cantidad: this.state.counter,
       subtotal
     };
     this.setState({ counter: 1 });
-    this.props.addProductToCart(this.props.cart, newProduct);
+    this.props.addProductToCart(
+      this.props.cart,
+      newProduct,
+      this.props.mayorista
+    );
     this.props.cancelProductToAdd();
   }
 
@@ -63,7 +74,7 @@ class ModalAddProduct extends Component {
                   {this.props.productToAdd.producto.nombre}
                 </Text>
                 <Text style={{ color: "#c2c2c2" }}>
-                  #{this.props.productToAdd.idProducto}
+                  #{this.props.productToAdd.producto.idProducto}
                 </Text>
               </View>
 
@@ -83,8 +94,11 @@ class ModalAddProduct extends Component {
                   }}
                 >
                   $
-                  {this.props.productToAdd.precioVentaMayorista *
-                    this.state.counter}
+                  {this.props.mayorista
+                    ? this.props.productToAdd.precioVentaMayorista *
+                      this.state.counter
+                    : this.props.productToAdd.precioVentaMinorista *
+                      this.state.counter}
                 </Text>
                 <CounterButton
                   decreaseCount={() => this.decreaseCount()}
@@ -103,8 +117,11 @@ class ModalAddProduct extends Component {
             >
               <Text style={{ color: "white", fontSize: 22 }}>
                 AGREGAR $
-                {this.props.productToAdd.precioVentaMayorista *
-                  this.state.counter}
+                {this.props.mayorista
+                  ? this.props.productToAdd.precioVentaMayorista *
+                    this.state.counter
+                  : this.props.productToAdd.precioVentaMinorista *
+                    this.state.counter}
               </Text>
             </Button>
           </View>
@@ -120,7 +137,8 @@ function mapStateToProps(state) {
   return {
     productToAdd: state.reducerProductos.productToAdd,
     cart: state.reducerCarrito.cart,
-    itemToEdit: state.reducerCarrito.itemToEdit
+    itemToEdit: state.reducerCarrito.itemToEdit,
+    mayorista: state.reducerVenta.mayorista
   };
 }
 
@@ -128,8 +146,8 @@ const mapDispatchToProps = dispatch => ({
   cancelProductToAdd: () => {
     dispatch({ type: "CANCEL_PRODUCT_TO_ADD" });
   },
-  addProductToCart: (cart, product) => {
-    dispatch(addProductToCart(cart, product));
+  addProductToCart: (cart, product, mayorista) => {
+    dispatch(addProductToCart(cart, product, mayorista));
   }
 });
 

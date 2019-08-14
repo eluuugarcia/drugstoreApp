@@ -44,7 +44,6 @@ class CounterButton extends Component {
   };
 
   componentDidMount = () => {
-    console.log("7483975348967358");
     if (!this.props.new) {
       Animated.timing(this.state.animation, {
         toValue: 1,

@@ -26,7 +26,7 @@ class ModalEditItemCart extends Component {
     };
 
     this.setState({ counter: 1 });
-    this.props.editItemCart(this.props.cart, newProduct);
+    this.props.editItemCart(this.props.cart, newProduct, this.props.mayorista);
     this.props.cancelProductToEdit();
   }
 
@@ -143,7 +143,8 @@ class ModalEditItemCart extends Component {
 function mapStateToProps(state) {
   return {
     cart: state.reducerCarrito.cart,
-    itemToEdit: state.reducerCarrito.itemToEdit
+    itemToEdit: state.reducerCarrito.itemToEdit,
+    mayorista: state.reducerVenta.mayorista
   };
 }
 
@@ -151,8 +152,8 @@ const mapDispatchToProps = dispatch => ({
   cancelProductToEdit: () => {
     dispatch(cancelProductToEdit());
   },
-  editItemCart: (cart, item) => {
-    dispatch(editProductToCart(cart, item));
+  editItemCart: (cart, item, mayorista) => {
+    dispatch(editProductToCart(cart, item, mayorista));
   },
   removeProductToCart: (cart, item) => {
     dispatch(removeProductToCart(cart, item));

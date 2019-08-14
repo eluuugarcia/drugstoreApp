@@ -10,7 +10,6 @@ function Producto(props) {
       onPress={() => {
         props.editItem(props.cartProduct);
       }}
-      onLongPress={() => console.log("on long press")}
     >
       <View style={styles.producto}>
         <View style={styles.left}>

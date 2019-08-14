@@ -48,7 +48,7 @@ class BuscarProductos extends Component {
       this.setState({ initSearch: true });
       const searchProducts = this.props.productos.filter(item => {
         const itemName = item.producto.nombre.toLowerCase();
-        const itemID = item.idProducto.toString().toLowerCase();
+        const itemID = item.producto.idProducto.toString().toLowerCase();
         const textSearch = text.toLowerCase();
 
         return (
@@ -78,9 +78,9 @@ class BuscarProductos extends Component {
           value={this.state.search}
           platform="android"
           placeholder="Buscar productos..."
-          containerStyle={{ backgroundColor: "#35377c" }}
+          containerStyle={{ backgroundColor: "#5d357c" }}
           placeholderTextColor="white"
-          inputContainerStyle={{ backgroundColor: "#35377c" }}
+          inputContainerStyle={{ backgroundColor: "#5d357c" }}
           inputStyle={{ color: "white" }}
           showLoading={false}
           onChangeText={text => this.searchFilterFunction(text)}
@@ -154,7 +154,7 @@ class BuscarProductos extends Component {
           )}
           <Fab
             active
-            style={{ backgroundColor: "#35377c" }}
+            style={{ backgroundColor: "#5d357c" }}
             position="bottomRight"
             onPress={() => {
               this.props.openCart();
@@ -177,7 +177,8 @@ class BuscarProductos extends Component {
                 badgeStyle={{
                   paddingVertical: 10,
                   paddingHorizontal: 2,
-                  borderColor: "rgba(0, 0, 0, 0)"
+                  borderColor: "rgba(0, 0, 0, 0)",
+                  backgroundColor: "#C51162"
                 }}
                 status="primary"
                 textStyle={{ fontWeight: "700", fontSize: 14 }}
@@ -222,9 +223,6 @@ const mapDispatchToProps = dispatch => ({
   },
   openCart: () => {
     dispatch({ type: "OPEN_CART" });
-  },
-  closeCart: () => {
-    dispatch({ type: "CLOSE_CART" });
   }
 });
 

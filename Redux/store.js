@@ -8,6 +8,8 @@ import reducerSession from "./Reducers/Sesion/reducerSession";
 import reducerProductos from "./Reducers/Venta/reducerProductos";
 import reducerLoading from "./Reducers/Loading/reducerLoading";
 import reducerCarrito from "./Reducers/Venta/reducerCarrito";
+import reducerClientes from "./Reducers/Clientes/reducerClientes";
+import reducerVenta from "./Reducers/Venta/reducerVenta";
 import ReduxThunk from "redux-thunk";
 import { composeWithDevTools } from "remote-redux-devtools";
 
@@ -27,7 +29,9 @@ const rootReducer = combineReducers({
   reducerSession,
   reducerProductos,
   reducerLoading,
-  reducerCarrito
+  reducerCarrito,
+  reducerClientes,
+  reducerVenta
 });
 
 // Armamos el reducer a persisitir

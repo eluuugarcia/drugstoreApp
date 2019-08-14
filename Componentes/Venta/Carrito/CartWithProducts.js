@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     flex: 0.45,
-    marginVertical: 30
+    marginVertical: 30,
+    alignItems: "center"
   },
   deleteButton: {
     backgroundColor: "#c02942",

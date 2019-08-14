@@ -1,12 +1,14 @@
 import { createStackNavigator } from "react-navigation";
 import CargarProductos from "../Venta/Agregar Productos/CargarProductos";
-import Venta from "../Venta/Venta";
+import Inicio from "../Venta/Inicio";
 import LeerProductos from "../Venta/Escanear Productos/LeerProductos";
 import BuscarProductos from "../Venta/Buscar Productos/BuscarProductos";
+import Venta from "../Venta/Venta/Venta";
+import VentaMayorista from "../Venta/Venta/VentaMayorista";
 
 const StackVenta = createStackNavigator({
-  Venta: {
-    screen: Venta,
+  Inicio: {
+    screen: Inicio,
     navigationOptions: {
       header: null
     }
@@ -19,6 +21,18 @@ const StackVenta = createStackNavigator({
   },
   LeerProductos: {
     screen: LeerProductos
+  },
+  VentaMayorista: {
+    screen: VentaMayorista,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Venta: {
+    screen: Venta,
+    navigationOptions: {
+      header: null
+    }
   }
 });
 

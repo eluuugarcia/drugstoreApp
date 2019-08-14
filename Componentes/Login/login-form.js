@@ -65,7 +65,7 @@ const LoginForm = props => {
     color2 = "#1d9eb1";
   }
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View style={{ flex: 1, justifyContent: "center", marginHorizontal: 30 }}>
       <KeyboardAvoidingView
         behavior="padding"
         style={styles.container}
@@ -75,6 +75,7 @@ const LoginForm = props => {
         <View
           style={{
             flex: 1
+            //marginHorizontal: 50
           }}
         >
           <Field name="user" component={field} ph="Usuario" icon="user" />

@@ -13,7 +13,7 @@ import { Alert } from "react-native";
 // Configuracion de axios:
 // baseURL es la url general
 const configAxios = () => {
-  axios.defaults.baseURL = "http://f5f11216.ngrok.io";
+  axios.defaults.baseURL = "https://cbef1ce4.ngrok.io";
   axios.defaults.headers["Content-Type"] = "application/json";
   axios.defaults.headers.Accept = "application/json";
 };
@@ -34,12 +34,6 @@ const login = ({ user, password }) => {
       console.log(token);
       axios.defaults.headers.Authorization = `Token ${token}`;
 
-      Alert.alert(
-        "                Sesion Iniciada!",
-        `Token: ${token}`,
-        [{ text: "OK", onPress: () => console.log("OK") }],
-        { cancelable: false }
-      );
       return response;
     })
     .catch(error => {
@@ -75,6 +69,33 @@ const getProductos = token => {
       // console.log('Success: ');
       const productos = await res.data;
       return productos;
+    })
+    .catch(error => error);
+};
+
+const getClientes = token => {
+  axios.defaults.headers.Authorization = `Token ${token}`;
+  configAxios();
+  return axios
+    .get("/sucursal/clienteDeSucursal/")
+    .then(async res => {
+      // console.log('Success: ');
+      const clientes = await res.data;
+
+      return clientes;
+    })
+    .catch(error => error);
+};
+
+const getTipoProductos = token => {
+  axios.defaults.headers.Authorization = `Token ${token}`;
+  configAxios();
+  return axios
+    .get("/producto/tipoProducto/")
+    .then(async res => {
+      // console.log('Success: ');
+      const tiposProductos = await res.data;
+      return tiposProductos;
     })
     .catch(error => error);
 };
@@ -144,8 +165,29 @@ function* sagaRemovePreviousSession() {
 function* sagaGetProductos() {
   try {
     const { token } = yield select(state => state.reducerSession);
+
     const productos = yield call(getProductos, token);
     yield put({ type: "CARGAR_PRODUCTOS", productos });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* sagaGetClientes() {
+  try {
+    const { token } = yield select(state => state.reducerSession);
+    const clientes = yield call(getClientes, token);
+    yield put({ type: "CARGAR_CLIENTES", clientes });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* sagaGetTiposProductos() {
+  try {
+    const { token } = yield select(state => state.reducerSession);
+    const tipoProductos = yield call(getTipoProductos, token);
+    yield put({ type: "CARGAR_TIPOS_PRODUCTOS", tipoProductos });
   } catch (error) {
     console.log(error);
   }
@@ -156,4 +198,6 @@ export default function* primaryFunction() {
   yield takeEvery("LOGOUT", sagaLogout);
   yield takeEvery("REMOVE_EXIST_SESION", sagaRemovePreviousSession);
   yield takeEvery("GET_PRODUCTOS", sagaGetProductos);
+  yield takeEvery("GET_CLIENTES", sagaGetClientes);
+  yield takeEvery("GET_TIPOS_PRODUCTOS", sagaGetTiposProductos);
 }

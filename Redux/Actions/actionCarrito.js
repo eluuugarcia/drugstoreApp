@@ -14,6 +14,10 @@ export const createItemToAdd = productToAdd => dispatch => {
   dispatch(setItemToAdd(productToAdd));
 };
 
+export const setBarcodeNotFound = () => {
+  return { type: "SET_BARCODE_NOT_FOUND" };
+};
+
 export const unsetProductToAdd = () => {
   return { type: "CANCEL_PRODUCT_TO_ADD" };
 };
@@ -32,14 +36,15 @@ export const goToSearchProducts = navigation => dispatch => {
 };
 
 export const searchBarcode = (barcode, products) => dispatch => {
-  console.log("vamos a buscar el producto: ");
-  console.log(barcode);
   products.forEach(product => {
-    console.log("product.idProducto: ");
-    console.log(product.idProducto);
-    if (product.idProducto == barcode) {
+    if (product.producto.idProducto == barcode) {
       return dispatch(createItemToAdd(product));
+    } else {
+      return dispatch(setBarcodeNotFound());
     }
+    // else {
+    //   return dispatch(setBarcodeNotFound());
+    // }
   });
 };
 

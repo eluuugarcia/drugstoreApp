@@ -10,9 +10,10 @@ import MiUsuario from "../Usuario/MiUsuario";
 
 const Nav = createMaterialBottomTabNavigator(
   {
-    Venta: {
+    Inicio: {
       screen: StackVenta,
       navigationOptions: {
+        tabBarColor: "#5d357c",
         tabBarIcon: ({ tintColor }) => (
           <Icon
             name="dollar"
@@ -26,6 +27,7 @@ const Nav = createMaterialBottomTabNavigator(
     Stock: {
       screen: Stock,
       navigationOptions: {
+        tabBarColor: "#b80b4a",
         tabBarIcon: ({ tintColor }) => (
           <Icon
             name="barcode"
@@ -39,6 +41,7 @@ const Nav = createMaterialBottomTabNavigator(
     Informes: {
       screen: StackInforme,
       navigationOptions: {
+        tabBarColor: "#3d5afe",
         tabBarIcon: ({ tintColor }) => (
           <Icon
             name="pie-chart"
@@ -52,6 +55,7 @@ const Nav = createMaterialBottomTabNavigator(
     Clientes: {
       screen: StackClientes,
       navigationOptions: {
+        tabBarColor: "#0091ea",
         tabBarIcon: ({ tintColor }) => (
           <Icon name="male" family="FontAwesome" color={tintColor} size={25} />
         )
@@ -60,6 +64,7 @@ const Nav = createMaterialBottomTabNavigator(
     "Mi Usuario": {
       screen: MiUsuario,
       navigationOptions: {
+        tabBarColor: "#b42b00",
         tabBarIcon: ({ tintColor }) => (
           <Icon name="user" family="FontAwesome" color={tintColor} size={23} />
         )
@@ -67,9 +72,9 @@ const Nav = createMaterialBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Venta",
-    activeColor: "white",
-    inactiveColor: "#7374a5",
+    initialRouteName: "Inicio",
+    activeColor: "#fff",
+    inactiveColor: "#9c9ba2",
     barStyle: { backgroundColor: "#35377c" }
   }
 );
