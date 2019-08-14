@@ -43,7 +43,7 @@ class Login extends Component {
               source={require("../../assets/logo.png")}
               style={styles.imglogo}
             />
-            <Text style={styles.logoText}>DrugSoft</Text>
+            <Text style={styles.logoText}>The Joyería</Text>
           </View>
 
           <View style={styles.loginForm}>
