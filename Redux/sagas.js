@@ -13,7 +13,7 @@ import { Alert } from "react-native";
 // Configuracion de axios:
 // baseURL es la url general
 const configAxios = () => {
-  axios.defaults.baseURL = "https://cbef1ce4.ngrok.io";
+  axios.defaults.baseURL = "https://755b3498.ngrok.io";
   axios.defaults.headers["Content-Type"] = "application/json";
   axios.defaults.headers.Accept = "application/json";
 };
@@ -193,6 +193,31 @@ function* sagaGetTiposProductos() {
   }
 }
 
+validateBarcode = (token, { barcode }) => {
+  console.log("barcodeee");
+  console.log(barcode);
+  axios.defaults.headers.Authorization = `Token ${token}`;
+  configAxios();
+  return axios
+    .get(`/producto/existe/${barcode}`)
+    .then(async res => {
+      // console.log('Success: ');
+      const response = await res.data;
+      console.log(response);
+      return response;
+    })
+    .catch(error => error);
+};
+
+function* sagaValidateBarcode(barcode) {
+  try {
+    const { token } = yield select(state => state.reducerSession);
+    const response = yield call(validateBarcode, token, barcode);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default function* primaryFunction() {
   yield takeEvery("LOGIN", sagaLogin);
   yield takeEvery("LOGOUT", sagaLogout);
@@ -200,4 +225,5 @@ export default function* primaryFunction() {
   yield takeEvery("GET_PRODUCTOS", sagaGetProductos);
   yield takeEvery("GET_CLIENTES", sagaGetClientes);
   yield takeEvery("GET_TIPOS_PRODUCTOS", sagaGetTiposProductos);
+  yield takeEvery("VALIDATE_BARCODE", sagaValidateBarcode);
 }

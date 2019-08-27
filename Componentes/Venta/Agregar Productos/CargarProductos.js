@@ -16,6 +16,10 @@ class CargarProductos extends Component {
     this.props.cargarTipoProductos();
   }
 
+  validateBarcode = ({ barcode }) => {
+    this.props.validarCodigo(barcode);
+  };
+
   render() {
     const { navigation } = this.props;
     return (
@@ -34,14 +38,14 @@ class CargarProductos extends Component {
         <View
           style={{
             flex: 1,
-            marginHorizontal: 70,
-            justifyContent: "center",
-            alignContent: "center",
-            alignItems: "center",
+
             marginVertical: 40
           }}
         >
-          <AddProductForm tipoProductos={this.props.tipoProductos} />
+          <AddProductForm
+            tipoProductos={this.props.tipoProductos}
+            validateBarcode={values => this.validateBarcode(values)}
+          />
         </View>
       </View>
     );
@@ -68,8 +72,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     cargarTipoProductos: () => {
-      console.log("hfisjdfhs");
       dispatch({ type: "GET_TIPOS_PRODUCTOS" });
+    },
+    validarCodigo: barcode => {
+      dispatch({ type: "VALIDATE_BARCODE", barcode });
     }
   };
 };

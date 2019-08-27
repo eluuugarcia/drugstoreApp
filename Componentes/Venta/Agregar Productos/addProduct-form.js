@@ -1,55 +1,45 @@
 // import liraries
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  ScrollView,
-  KeyboardAvoidingView,
-  Text
-} from "react-native";
+import { View, Text, Image } from "react-native";
 import { Field, reduxForm } from "redux-form";
-import { Input } from "galio-framework";
-import { Button } from "react-native-elements";
+import { Button } from "react-native-paper";
 import { LinearGradient } from "expo";
-import { AntDesign } from "@expo/vector-icons";
-import { TextInput } from "react-native-paper";
-import { Picker, TextField, Modal } from "react-native-ui-lib";
+import { Fab } from "native-base";
 
-const field = props => (
-  <View style={{ marginBottom: 10 }}>
-    <TextField
-      floatingPlaceholder
-      floatingPlaceholderColor="#800080"
-      placeholder={props.ph}
-      ref={r => (input = r)}
-      underlineColor={{ focus: "#800080", error: "grey" }}
-      multiline={!!(props.input.name === "description")}
-      style={{ color: "black" }}
-      keyboardType={props.input.name === "precio" ? "numeric" : "default"}
-    />
-    {/* <TextInput
-      style={{ backgroundColor: "white" }}
-      label={props.ph}
-      value={props.input.value}
-      mode="flat"
-      onChangeText={props.input.onChange}
-      multiline={!!(props.input.name === "description")}
-    /> */}
-  </View>
-);
+import { Picker, TextField, Modal } from "react-native-ui-lib";
+import { AntDesign, FontAwesome, Entypo } from "@expo/vector-icons";
+import SmoothPinCodeInput from "react-native-smooth-pincode-input";
+
+const field = props => {
+  return (
+    <View>
+      <TextField
+        floatingPlaceholder
+        floatingPlaceholderColor="#800080"
+        placeholder={props.ph}
+        onChangeText={props.input.onChange}
+        value={props.input.value}
+        underlineColor={{ focus: "#800080", error: "grey" }}
+        style={{ color: "black" }}
+        keyboardType={props.input.name === "barcode" ? "numeric" : "default"}
+        //onBlur={() => console.log("dejo de de escribir!!")}
+        //onSubmitEditing={e => console.log(e)}
+
+        onBlur={props.input.onBlur}
+      />
+    </View>
+  );
+};
 
 const validate = values => {
   const errors = {};
-
-  if (!values.user) {
-    errors.user = "Ingrese su usuario";
+  if (!values.name) {
+    errors.name = "Ingrese un nombre";
   }
 
-  if (!values.password) {
-    errors.password = "Ingrese su contraseña";
+  if (values.precio) {
+    console.log("PRECIO MAL");
+    errors.precio = "Ingrese un precio";
   }
 
   return errors;
@@ -57,8 +47,8 @@ const validate = values => {
 
 function AddProductForm(props) {
   const { invalid } = props;
-  let color1 = "grey";
-  let color2 = "grey";
+  let color1 = "#afafaf";
+  let color2 = "#afafaf";
   if (invalid) {
     color1 = "#7575753b";
     color2 = "#7575753b";
@@ -66,91 +56,63 @@ function AddProductForm(props) {
     color1 = "#77309b";
     color2 = "#ad55c4";
   }
-  return (
-    <View style={{ flex: 1, alignItems: "center" }}>
-      <KeyboardAvoidingView
-        behavior="position"
-        style={styles.container}
-        onPress={Keyboard.dismiss}
-        keyboardVerticalOffset={10}
-      >
-        <View
-          style={{
-            flex: 1,
 
-            justifyContent: "space-between",
-            marginBottom: 50
+  return (
+    <View
+      style={{
+        flex: 1
+      }}
+    >
+      <View style={{ flex: 0.8, alignItems: "center", marginHorizontal: 10 }}>
+        {/* <Field name="barcode" component={field} ph="Código" /> */}
+        <Text
+          style={{
+            fontWeight: "400",
+            textShadowColor: "rgba(96, 0, 95, 0.5)",
+            textShadowOffset: {
+              width: 0.4,
+              height: 0.4
+            },
+            fontSize: 22,
+            textShadowRadius: 2
           }}
         >
-          <Field name="name" component={field} ph="Nombre" icon="clipboard" />
-          <Picker
-            placeholder="Selecciona un tipo de producto"
-            floatingPlaceholder
-            floatingPlaceholderColor="#800080"
-            //onChange={item => this.setState({language: item})}
-            topBarProps={{ title: "Tipos de producto" }}
-            style={{
-              color: "black"
-            }}
-          >
-            {props.tipoProductos.map(option => (
-              <Picker.Item
-                key={option.idTipoProducto}
-                value={option.idTipoProducto}
-                label={option.nombre}
-              />
-            ))}
-          </Picker>
-          <Field name="precio" component={field} ph="Precio" icon="dollar" />
-          <Field
-            name="description"
-            component={field}
-            ph="Descripción"
-            icon="dollar"
-          />
-        </View>
-        <View style={{}}>
-          <Button
-            ViewComponent={LinearGradient}
-            linearGradientProps={{
-              colors: [color1, color2],
-              start: { x: 0, y: 0.5 },
-              end: { x: 1, y: 0.5 }
-            }}
-            title="Agregar producto"
-            disabled={invalid}
-            disabledStyle={{
-              backgroundColor: "#afaeae"
-            }}
-            disabledTitleStyle={{ color: "#4a4444" }}
-            buttonStyle={{
-              borderRadius: 80,
-              width: 300
-            }}
-          />
-        </View>
-      </KeyboardAvoidingView>
+          Ingrese el código del producto:
+        </Text>
+        <Image
+          style={{ height: 180, width: 180, marginVertical: 20 }}
+          source={{
+            uri:
+              "https://cdn4.iconfinder.com/data/icons/business-marketing-colors-set-1/91/Business_Marketing_56-512.png"
+          }}
+        />
+        <SmoothPinCodeInput
+          cellStyle={{
+            borderBottomWidth: 2,
+            borderColor: "gray"
+          }}
+          cellStyleFocused={{
+            borderColor: "black"
+          }}
+          codeLength={11}
+          cellSpacing={5}
+          cellSize={22}
+          autoFocus
+          restrictToNumbers
+          //value={code}
+          //onTextChange={code => this.setState({ code })}
+        />
+        <Fab
+          disabled={validate}
+          style={{ backgroundColor: "#ef6e73" }}
+          position="bottomRight"
+          onPress={props.handleSubmit(props.validateBarcode)}
+        >
+          <Entypo name="chevron-right" />
+        </Fab>
+      </View>
     </View>
   );
 }
-const styles = StyleSheet.create({
-  fields: {
-    flex: 1,
-    backgroundColor: "red"
-  },
-  textInput: {
-    borderRadius: 40,
-    borderWidth: 1,
-    borderColor: "#662584",
-    marginVertical: 10
-  },
-  errors: {
-    color: "#c32f29"
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center"
-  }
-});
 
 export default reduxForm({ form: "AddProductForm", validate })(AddProductForm);
