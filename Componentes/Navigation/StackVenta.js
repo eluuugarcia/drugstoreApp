@@ -5,6 +5,8 @@ import LeerProductos from "../Venta/Escanear Productos/LeerProductos";
 import BuscarProductos from "../Venta/Buscar Productos/BuscarProductos";
 import Venta from "../Venta/Venta/Venta";
 import VentaMayorista from "../Venta/Venta/VentaMayorista";
+import NuevoProducto from "../Venta/Agregar Productos/NuevoProducto";
+import PagoVenta from "../Venta/PagoVenta";
 
 const StackVenta = createStackNavigator({
   Inicio: {
@@ -30,6 +32,18 @@ const StackVenta = createStackNavigator({
   },
   Venta: {
     screen: Venta,
+    navigationOptions: {
+      header: null
+    }
+  },
+  NuevoProducto: {
+    screen: NuevoProducto,
+    navigationOptions: {
+      header: null
+    }
+  },
+  PagoVenta: {
+    screen: PagoVenta,
     navigationOptions: {
       header: null
     }

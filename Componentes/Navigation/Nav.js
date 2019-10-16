@@ -7,20 +7,17 @@ import Stock from "../Stock/Stock";
 import { StackInforme } from "./StackInforme";
 import { StackClientes } from "./StackClientes";
 import MiUsuario from "../Usuario/MiUsuario";
+import { FontAwesome, MaterialIcons, Entypo } from "@expo/vector-icons";
+import THEME from "../GlobalUtils/THEME";
 
 const Nav = createMaterialBottomTabNavigator(
   {
     Inicio: {
       screen: StackVenta,
       navigationOptions: {
-        tabBarColor: "#5d357c",
+        tabBarColor: THEME.appBarColor,
         tabBarIcon: ({ tintColor }) => (
-          <Icon
-            name="dollar"
-            family="FontAwesome"
-            color={tintColor}
-            size={25}
-          />
+          <FontAwesome name="dollar" size={25} color={tintColor}></FontAwesome>
         )
       }
     },
@@ -29,12 +26,7 @@ const Nav = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarColor: "#b80b4a",
         tabBarIcon: ({ tintColor }) => (
-          <Icon
-            name="barcode"
-            family="FontAwesome"
-            color={tintColor}
-            size={25}
-          />
+          <FontAwesome name="barcode" size={25} color={tintColor}></FontAwesome>
         )
       }
     },
@@ -43,12 +35,11 @@ const Nav = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarColor: "#3d5afe",
         tabBarIcon: ({ tintColor }) => (
-          <Icon
+          <FontAwesome
             name="pie-chart"
-            family="FontAwesome"
-            color={tintColor}
             size={25}
-          />
+            color={tintColor}
+          ></FontAwesome>
         )
       }
     },
@@ -57,7 +48,7 @@ const Nav = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarColor: "#0091ea",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="male" family="FontAwesome" color={tintColor} size={25} />
+          <FontAwesome name="male" size={25} color={tintColor}></FontAwesome>
         )
       }
     },
@@ -66,7 +57,7 @@ const Nav = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarColor: "#b42b00",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="user" family="FontAwesome" color={tintColor} size={23} />
+          <FontAwesome name="user" size={25} color={tintColor}></FontAwesome>
         )
       }
     }

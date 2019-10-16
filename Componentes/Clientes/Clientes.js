@@ -3,19 +3,15 @@ import React, { useState } from "react";
 import { View, Button, Text, StyleSheet } from "react-native";
 
 export default function Clientes() {
-  //const [count, setCount] = useState(0);
-
-  // function buttonClickHandler() {
-  //   setCount(count + 1);
-  // }
+  const [count, setCount] = useState(0);
 
   return (
     <View style={{ flex: 1 }}>
-      <Text>You clicked times.</Text>
+      <Text>{count}</Text>
       <Button
-        //onPress={buttonClickHandler}
+        onPress={() => setCount(count + 1)}
         title="Click me"
-        color="red"
+        color="green"
         accessibilityLabel="Click this button to increase count"
       />
     </View>

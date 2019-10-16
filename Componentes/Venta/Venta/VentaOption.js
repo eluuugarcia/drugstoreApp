@@ -1,7 +1,7 @@
 import React from "react";
 import { ListItem } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
-import { LinearGradient } from "expo";
+import { LinearGradient } from "expo-linear-gradient";
 
 function VentaOption(props) {
   return (

@@ -32,6 +32,7 @@ class Carrito extends Component {
               total={this.props.total}
               cleanCart={this.props.cleanCart}
               closeCart={this.props.closeCart}
+              goToPagoVenta={this.props.goToPagoVenta}
             />
           ) : (
             <EmptyCart goToSearchProducts={this.props.goToSearchProducts} />
@@ -99,12 +100,15 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   closeCart: () => {
     dispatch({ type: "CLOSE_CART" });
   },
   cleanCart: () => {
     dispatch({ type: "CLEAN_CART" });
+  },
+  goToPagoVenta: () => {
+    dispatch({ type: "SHOW_PAGO_VENTA" });
   }
 });
 

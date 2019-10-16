@@ -38,10 +38,6 @@ or
 npm i --save lottie-react-native@2.5.11
 ```
 
-**_ IMPORTANT _**
-
-Apps that use static Xcode project linking need to set iOS deployment version to iOS 12 *or* switch to CocoaPods-based linking (using frameworks) *or* downgrade `lottie-react-native` to version **_2.6.1_**.
-
 ## iOS
 
 Use `react-native link` to add the library to your project:
@@ -150,7 +146,7 @@ You can find the full list of props and methods available in our [API document](
 
 ## More
 
-View more documentation, FAQ, help, examples, and more at [airbnb.io/lottie](https://airbnb.io/lottie/)
+View more documentation, FAQ, help, examples, and more at [airbnb.io/lottie](http://airbnb.io/lottie/react-native/react-native.html)
 
 ![Example1](docs/gifs/Example1.gif)
 

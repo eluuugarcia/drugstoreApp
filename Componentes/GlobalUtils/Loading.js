@@ -1,35 +1,32 @@
-import React from 'react';
-import {
-  View,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
-import { connect } from 'react-redux';
+import React from "react";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
 function Loading(props) {
   if (props.loading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size={70} color="#1d9eb1" />
+        <ActivityIndicator size={70} color={props.color} />
       </View>
-
-
     );
-  } return null;
+  }
+  return null;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(28, 28, 28, 0.6)',
+    backgroundColor: "rgba(28, 28, 28, 0.6)",
     paddingHorizontal: 150,
-    paddingVertical: 270,
-
-  },
+    paddingVertical: 270
+  }
 });
 
 function mapStateToProps(state) {
   return { loading: state.reducerLoading.loading };
 }
 
-export default connect(mapStateToProps, null)(Loading);
+export default connect(
+  mapStateToProps,
+  null
+)(Loading);

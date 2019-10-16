@@ -1,25 +1,39 @@
 import React from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, Dimensions, View } from "react-native";
 import LottieView from "lottie-react-native";
 import { connect } from "react-redux";
 
 class Animation extends React.Component {
   render() {
-    if (this.props.ok) {
-      return (
+    const { width } = Dimensions.get("window");
+    const { height } = Dimensions.get("window");
+    return (
+      <View
+        style={{
+          width: width,
+          height: height,
+          position: "absolute",
+          paddingVertical: height / 5,
+          // paddingHorizontal: width / 40,
+          backgroundColor: "rgba(0, 0, 0, 0.7)"
+        }}
+      >
         <LottieView
-          source={require("../../assets/animations/433-checked-done.json")}
+          source={this.props.uri}
           autoPlay
+          speed={this.props.speed}
           loop
-          //style={{ backgroundColor: "#000", position: "absolute", top: 0 }}
+          style={{
+            width: width
+          }}
         />
-      );
-    }
-    return null;
+        {this.props.children}
+      </View>
+    );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ok: state.reducerCarrito.ok
   };

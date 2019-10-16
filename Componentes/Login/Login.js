@@ -11,9 +11,8 @@ import {
   Text
 } from "react-native";
 import { connect } from "react-redux";
-import KeyboardSpacer from "react-native-keyboard-spacer";
 import LoginForm from "./login-form";
-import ErrorModal from "../GlobalUtils/ErrorModal";
+import ErrorModalLogin from "../GlobalUtils/ErrorModalLogin";
 import Loading from "../GlobalUtils/Loading";
 
 // create a component
@@ -47,11 +46,11 @@ class Login extends Component {
           </View>
 
           <View style={styles.loginForm}>
-            <LoginForm login={loginValues => this.login(loginValues)} />
+            <LoginForm login={(loginValues) => this.login(loginValues)} />
             <Text style={styles.forgotPass}>¿Olvidaste tu contraseña?</Text>
           </View>
 
-          <ErrorModal />
+          <ErrorModalLogin />
         </View>
         {this.props.loading ? (
           <View
@@ -61,7 +60,7 @@ class Login extends Component {
               height: "100%"
             }}
           >
-            <Loading />
+            <Loading color="#1d9eb1" />
           </View>
         ) : null}
       </View>
@@ -124,7 +123,7 @@ function mapDispatchToProps(dispatch) {
     setLoading: () => {
       dispatch({ type: "SET_LOADING" });
     },
-    login: loginValues => {
+    login: (loginValues) => {
       dispatch({ type: "LOGIN", loginValues });
     }
   };

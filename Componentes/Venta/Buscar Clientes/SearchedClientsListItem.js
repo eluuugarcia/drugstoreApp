@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 import TouchableScale from "react-native-touchable-scale";
-import { LinearGradient } from "expo";
+import { LinearGradient } from "expo-linear-gradient";
 import { ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 

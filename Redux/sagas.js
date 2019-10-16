@@ -5,15 +5,17 @@ import {
   put,
   all,
   fork,
-  take
+  take,
+  takeLatest
 } from "redux-saga/effects";
 import axios from "react-native-axios";
 import { Alert } from "react-native";
+import CONSTANTES from "../Componentes/GlobalUtils/CONSTANTES";
 
 // Configuracion de axios:
 // baseURL es la url general
 const configAxios = () => {
-  axios.defaults.baseURL = "https://755b3498.ngrok.io";
+  axios.defaults.baseURL = CONSTANTES.api;
   axios.defaults.headers["Content-Type"] = "application/json";
   axios.defaults.headers.Accept = "application/json";
 };
@@ -27,77 +29,113 @@ const login = ({ user, password }) => {
       username: user,
       password
     })
-    .then(async res => {
-      console.log("Success");
+    .then(async (res) => {
       const response = await res;
       const { token } = response.data;
-      console.log(token);
+
       axios.defaults.headers.Authorization = `Token ${token}`;
 
       return response;
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("Error: ", error.response);
       return error.response;
     });
 };
 
-const logout = token => {
+const logout = (token) => {
   axios.defaults.headers.Authorization = `Token ${token}`;
   configAxios();
   return axios
     .post("/usuario/logout/", {
       token
     })
-    .then(async res => {
+    .then(async (res) => {
       const response = await res;
+
       return response;
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("Error: ");
       console.log(error);
       return error;
     });
 };
 
-const getProductos = token => {
+const iniciarTurno = (token) => {
+  configAxios();
+  axios.defaults.headers.Authorization = `Token ${token}`;
+  configAxios();
+  return axios
+    .post("/usuario/iniciarTurno/")
+    .then(async (res) => {
+      const response = await res;
+      return response;
+    })
+    .catch((error) => {
+      console.log("Error: ", error.response);
+      return error.response;
+    });
+};
+
+const getProductos = async (token) => {
   axios.defaults.headers.Authorization = `Token ${token}`;
   configAxios();
   return axios
     .get("/sucursal/producto/")
-    .then(async res => {
-      // console.log('Success: ');
+    .then(async (res) => {
       const productos = await res.data;
       return productos;
     })
-    .catch(error => error);
+    .catch((error) => error);
 };
 
-const getClientes = token => {
+const getClientes = (token) => {
   axios.defaults.headers.Authorization = `Token ${token}`;
   configAxios();
   return axios
     .get("/sucursal/clienteDeSucursal/")
-    .then(async res => {
-      // console.log('Success: ');
+    .then(async (res) => {
       const clientes = await res.data;
-
       return clientes;
     })
-    .catch(error => error);
+    .catch((error) => error);
 };
 
-const getTipoProductos = token => {
+const getTipoProductos = async (token) => {
   axios.defaults.headers.Authorization = `Token ${token}`;
   configAxios();
   return axios
     .get("/producto/tipoProducto/")
-    .then(async res => {
-      // console.log('Success: ');
+    .then(async (res) => {
       const tiposProductos = await res.data;
       return tiposProductos;
     })
-    .catch(error => error);
+    .catch((error) => error);
+};
+
+const getMarcas = (token) => {
+  axios.defaults.headers.Authorization = `Token ${token}`;
+  configAxios();
+  return axios
+    .get("/producto/marca/")
+    .then(async (res) => {
+      const marcas = await res.data;
+      return marcas;
+    })
+    .catch((error) => error);
+};
+
+const getProveedores = (token) => {
+  axios.defaults.headers.Authorization = `Token ${token}`;
+  configAxios();
+  return axios
+    .get("/proveedor/")
+    .then(async (res) => {
+      const proveedores = await res.data;
+      return proveedores;
+    })
+    .catch((error) => error);
 };
 
 // Sagas:
@@ -109,7 +147,10 @@ function* sagaLogin(values) {
     switch (response.status) {
       case 201:
         const { token } = response.data;
-        yield put({ type: "SET_SESSION", token });
+        const responseTurno = yield call(iniciarTurno, token);
+        if (responseTurno.status === 201) {
+          yield put({ type: "SET_SESSION", token });
+        }
         break;
       case 403:
         const oldToken = response.data;
@@ -126,7 +167,7 @@ function* sagaLogin(values) {
 
 function* sagaLogout() {
   try {
-    const { token } = yield select(state => state.reducerSession);
+    const { token } = yield select((state) => state.reducerSession);
     const response = yield call(logout, token);
     if (response.status === 201) {
       axios.defaults.headers.Authorization = "";
@@ -140,13 +181,13 @@ function* sagaLogout() {
 function* sagaRemovePreviousSession() {
   try {
     yield put({ type: "SET_LOADING" });
-    const { previousToken } = yield select(state => state.reducerSession);
+    const { previousToken } = yield select((state) => state.reducerSession);
     const response = yield call(logout, previousToken);
     if (response.status === 201) {
       yield put({ type: "UNSET_ERROR_SESSION" });
-      const user = yield select(state => state.form.LoginForm.values.user);
+      const user = yield select((state) => state.form.LoginForm.values.user);
       const password = yield select(
-        state => state.form.LoginForm.values.password
+        (state) => state.form.LoginForm.values.password
       );
       const loginValues = {
         user,
@@ -164,9 +205,11 @@ function* sagaRemovePreviousSession() {
 
 function* sagaGetProductos() {
   try {
-    const { token } = yield select(state => state.reducerSession);
+    const { token } = yield select((state) => state.reducerSession);
 
     const productos = yield call(getProductos, token);
+    console.log("product");
+    console.log(productos);
     yield put({ type: "CARGAR_PRODUCTOS", productos });
   } catch (error) {
     console.log(error);
@@ -175,7 +218,7 @@ function* sagaGetProductos() {
 
 function* sagaGetClientes() {
   try {
-    const { token } = yield select(state => state.reducerSession);
+    const { token } = yield select((state) => state.reducerSession);
     const clientes = yield call(getClientes, token);
     yield put({ type: "CARGAR_CLIENTES", clientes });
   } catch (error) {
@@ -185,7 +228,7 @@ function* sagaGetClientes() {
 
 function* sagaGetTiposProductos() {
   try {
-    const { token } = yield select(state => state.reducerSession);
+    const { token } = yield select((state) => state.reducerSession);
     const tipoProductos = yield call(getTipoProductos, token);
     yield put({ type: "CARGAR_TIPOS_PRODUCTOS", tipoProductos });
   } catch (error) {
@@ -193,28 +236,62 @@ function* sagaGetTiposProductos() {
   }
 }
 
-validateBarcode = (token, { barcode }) => {
-  console.log("barcodeee");
-  console.log(barcode);
-  axios.defaults.headers.Authorization = `Token ${token}`;
-  configAxios();
-  return axios
-    .get(`/producto/existe/${barcode}`)
-    .then(async res => {
-      // console.log('Success: ');
-      const response = await res.data;
-      console.log(response);
-      return response;
-    })
-    .catch(error => error);
-};
-
-function* sagaValidateBarcode(barcode) {
+function* sagaGetMarcas() {
   try {
-    const { token } = yield select(state => state.reducerSession);
-    const response = yield call(validateBarcode, token, barcode);
+    const { token } = yield select((state) => state.reducerSession);
+    const marcas = yield call(getMarcas, token);
+    yield put({ type: "CARGAR_MARCAS", marcas });
   } catch (error) {
     console.log(error);
+  }
+}
+
+function* sagaGetProveedores() {
+  try {
+    const { token } = yield select((state) => state.reducerSession);
+    const proveedores = yield call(getProveedores, token);
+    yield put({ type: "CARGAR_PROVEEDORES", proveedores });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const validateBarcode = (token, barcode) => {
+  axios.defaults.headers.Authorization = `Token ${token}`;
+  configAxios();
+
+  return axios
+    .get(`/producto/existe/${barcode}`)
+    .then(async (res) => {
+      // console.log('Success: ');
+      const response = await res.data;
+      return response;
+    })
+    .catch((error) => error);
+};
+
+function* sagaValidateBarcode({ barcode }) {
+  yield put({ type: "SET_LOADING" });
+  try {
+    const { token } = yield select((state) => state.reducerSession);
+    const response = yield call(validateBarcode, token, barcode);
+    if (!response.existeEnSucursal) {
+      console.log("no existe en sucursal");
+      const proveedores = yield call(getProveedores, token);
+      const marcas = yield call(getMarcas, token);
+      const tipoProductos = yield call(getTipoProductos, token);
+      response.proveedores = proveedores;
+      response.marcas = marcas;
+      response.tipoProductos = tipoProductos;
+    }
+
+    response.barcode = barcode;
+
+    yield put({ type: "SET_NEW_PRODUCT", response });
+    yield put({ type: "UNSET_LOADING" });
+  } catch (error) {
+    console.log(error);
+    yield put({ type: "UNSET_LOADING" });
   }
 }
 
@@ -225,5 +302,7 @@ export default function* primaryFunction() {
   yield takeEvery("GET_PRODUCTOS", sagaGetProductos);
   yield takeEvery("GET_CLIENTES", sagaGetClientes);
   yield takeEvery("GET_TIPOS_PRODUCTOS", sagaGetTiposProductos);
+  yield takeEvery("GET_MARCAS", sagaGetMarcas);
+  yield takeEvery("GET_PROVEEDORES", sagaGetProveedores);
   yield takeEvery("VALIDATE_BARCODE", sagaValidateBarcode);
 }

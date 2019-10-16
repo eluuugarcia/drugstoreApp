@@ -12,12 +12,12 @@ import {
 import { Field, reduxForm } from "redux-form";
 import { Input } from "galio-framework";
 import { Button } from "react-native-elements";
-import { LinearGradient } from "expo";
-import KeyboardSpacer from "react-native-keyboard-spacer";
+import { LinearGradient } from "expo-linear-gradient";
 
-const field = props => (
+const field = (props) => (
   <View style={styles.fields}>
     <Input
+      required
       style={styles.textInput}
       placeholder={props.ph}
       onChangeText={props.input.onChange}
@@ -29,7 +29,7 @@ const field = props => (
       color="white"
       bgColor="rgba(255, 255, 255, 0.3)"
       icon={props.icon}
-      family="FontAwesome"
+      family="MaterialIcons"
       iconColor="white"
       right
       password={!!(props.input.name === "password")}
@@ -39,7 +39,7 @@ const field = props => (
   </View>
 );
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
 
   if (!values.user) {
@@ -53,7 +53,7 @@ const validate = values => {
   return errors;
 };
 
-const LoginForm = props => {
+const LoginForm = (props) => {
   const { invalid } = props;
   let color1 = "grey";
   let color2 = "grey";
@@ -75,10 +75,10 @@ const LoginForm = props => {
         <View
           style={{
             flex: 1
-            //marginHorizontal: 50
+            // marginHorizontal: 50
           }}
         >
-          <Field name="user" component={field} ph="Usuario" icon="user" />
+          <Field name="user" component={field} ph="Usuario" icon="person" />
 
           <Field
             name="password"

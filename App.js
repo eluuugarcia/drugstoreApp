@@ -10,7 +10,10 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <PersistGate loading={<Loading />} persistor={persistor}>
+        <PersistGate
+          loading={<Loading color="#b88ae6" />}
+          persistor={persistor}
+        >
           <Start />
         </PersistGate>
       </Provider>

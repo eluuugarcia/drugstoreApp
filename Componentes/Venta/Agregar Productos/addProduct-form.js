@@ -1,117 +1,249 @@
 // import liraries
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, KeyboardAvoidingView } from "react-native";
 import { Field, reduxForm } from "redux-form";
-import { Button } from "react-native-paper";
-import { LinearGradient } from "expo";
 import { Fab } from "native-base";
+import PickerModal from "react-native-picker-modal-view";
+import { TextInput, Button } from "react-native-paper";
+import { ScrollView } from "react-native-gesture-handler";
 
-import { Picker, TextField, Modal } from "react-native-ui-lib";
-import { AntDesign, FontAwesome, Entypo } from "@expo/vector-icons";
-import SmoothPinCodeInput from "react-native-smooth-pincode-input";
-
-const field = props => {
+const field = (props) => {
+  console.log(props.input.name);
+  if (props.input.theProp) {
+    console.log("hay the prop");
+  }
+  console.log(props.input.value);
   return (
-    <View>
-      <TextField
-        floatingPlaceholder
-        floatingPlaceholderColor="#800080"
+    <View style={{ marginBottom: 15 }}>
+      <TextInput
+        required={props.input.name !== "descripcion"}
+        label={props.label}
         placeholder={props.ph}
-        onChangeText={props.input.onChange}
+        mode="outlined"
         value={props.input.value}
-        underlineColor={{ focus: "#800080", error: "grey" }}
-        style={{ color: "black" }}
-        keyboardType={props.input.name === "barcode" ? "numeric" : "default"}
-        //onBlur={() => console.log("dejo de de escribir!!")}
-        //onSubmitEditing={e => console.log(e)}
-
+        keyboardType={
+          props.input.name === "descripcion" || props.input.name === "nombre"
+            ? "default"
+            : "numeric"
+        }
+        numberOfLines={props.input.name === "description" ? 3 : 1}
+        multiline={!!(props.input.name === "description")}
+        disabled={props.disabled}
+        error={props.meta.touched && props.meta.error}
+        onChangeText={props.input.onChange}
         onBlur={props.input.onBlur}
       />
     </View>
   );
 };
 
-const validate = values => {
-  const errors = {};
-  if (!values.name) {
-    errors.name = "Ingrese un nombre";
-  }
+const selectField = (props) => (
+  <View style={{ marginBottom: 15 }}>
+    <PickerModal
+      requireSelection
+      items={props.data}
+      showToTopButton
+      selected={props.selected}
+      disabled={props.data.length === 1}
+      showAlphabeticalIndex
+      autoGenerateAlphabeticalIndex
+      selectPlaceholderText={props.ph}
+      searchPlaceholderText={props.searchText}
+      onSelected={props.onSelected}
+    />
+  </View>
+);
 
-  if (values.precio) {
-    console.log("PRECIO MAL");
-    errors.precio = "Ingrese un precio";
+const validate = (values) => {
+  console.log("las values!");
+  console.log(values);
+  const errors = {};
+  if (!values.nombre) {
+    errors.nombre = true;
+  } else if (values.nombre.trim() === "") {
+    errors.nombre = true;
+  }
+  if (
+    !values.precioVentaMayorista ||
+    isNaN(Number(values.precioVentaMayorista))
+  ) {
+    errors.precioVentaMayorista = true;
+  } else if (
+    values.precioVentaMayorista < 0 ||
+    values.precioVentaMayorista.trim() === ""
+  ) {
+    errors.precioVentaMayorista = true;
+  }
+  if (
+    !values.precioVentaMinorista ||
+    isNaN(Number(values.precioVentaMinorista))
+  ) {
+    errors.precioVentaMinorista = true;
+  } else if (
+    values.precioVentaMinorista < 0 ||
+    values.precioVentaMinorista.trim() === ""
+  ) {
+    errors.precioVentaMinorista = true;
+  }
+  if (!values.cantidad || isNaN(Number(values.cantidad))) {
+    errors.cantidad = true;
+  } else if (values.cantidad < 0 || values.cantidad.trim() === "") {
+    errors.cantidad = true;
   }
 
   return errors;
 };
 
+const validatePickers = (proveedor, marca, tipoProducto) => {
+  if (proveedor === null || marca === null || tipoProducto === null) {
+    return true;
+  }
+  return false;
+};
+
 function AddProductForm(props) {
   const { invalid } = props;
-  let color1 = "#afafaf";
-  let color2 = "#afafaf";
-  if (invalid) {
-    color1 = "#7575753b";
-    color2 = "#7575753b";
-  } else {
-    color1 = "#77309b";
-    color2 = "#ad55c4";
-  }
+  const [proveedor, setProveedor] = useState(null);
+  const [marca, setMarca] = useState(null);
+  const [tipoProducto, setTipoProducto] = useState(null);
+  const [invalidPickers, setInvalidPickers] = useState(true);
 
   return (
-    <View
-      style={{
-        flex: 1
-      }}
+    <KeyboardAvoidingView
+      behavior="padding"
+      enabled
+      keyboardVerticalOffset={200}
     >
-      <View style={{ flex: 0.8, alignItems: "center", marginHorizontal: 10 }}>
-        {/* <Field name="barcode" component={field} ph="Código" /> */}
-        <Text
+      <ScrollView style={{ paddingHorizontal: 20 }}>
+        <Field
+          name="nombre"
+          label={
+            props.newProduct && props.newProduct.nombre
+              ? props.newProduct.nombre
+              : "Nombre del producto"
+          }
+          component={field}
+          ph="Nombre"
+          disabled={!!(props.newProduct && props.newProduct.nombre)}
+          theProp="holis"
+          value={
+            props.newProduct && props.newProduct.nombre
+              ? props.newProduct.nombre
+              : "nooo"
+          }
+        />
+        <Field
+          name="descripcion"
+          label={
+            props.newProduct.descripcion
+              ? props.newProduct.descripcion
+              : "Descripción"
+          }
+          component={field}
+          ph="Descripción del producto"
+          disabled={props.newProduct.descripcion === ""}
+          value={
+            props.newProduct.descripcion ? props.newProduct.descripcion : null
+          }
+        />
+        <Field
+          name="typeProduct"
+          label="Tipo de producto..."
+          component={selectField}
+          ph="Tipo de producto..."
+          searchText="Buscar un tipo..."
+          data={props.tipoProductos}
+          selected={
+            props.tipoProductos.length === 1
+              ? props.tipoProductos[0]
+              : tipoProducto
+          }
+          onSelected={(tipo) => {
+            setTipoProducto(tipo);
+            setInvalidPickers(validatePickers(proveedor, marca, tipoProducto));
+            props.setTipoProducto(tipo);
+          }}
+        />
+        <Field
+          name="marca"
+          label="Marca..."
+          component={selectField}
+          ph="Marca..."
+          searchText="Buscar marca..."
+          data={props.marcas}
+          selected={props.marcas.length === 1 ? props.marcas[0] : marca}
+          onSelected={(marca) => {
+            setMarca(marca);
+            setInvalidPickers(validatePickers(proveedor, marca, tipoProducto));
+            props.setMarca(marca);
+          }}
+        />
+        <Field
+          name="proveedor"
+          label="Proveedor..."
+          component={selectField}
+          ph="Proveedor..."
+          searchText="Buscar proveedor..."
+          data={props.proveedores}
+          selected={
+            props.proveedores.length === 1 ? props.proveedores[0] : proveedor
+          }
+          onSelected={(proveedor) => {
+            setProveedor(proveedor);
+            setInvalidPickers(validatePickers(proveedor, marca, tipoProducto));
+            props.setProv(proveedor);
+          }}
+        />
+
+        <View
           style={{
-            fontWeight: "400",
-            textShadowColor: "rgba(96, 0, 95, 0.5)",
-            textShadowOffset: {
-              width: 0.4,
-              height: 0.4
-            },
-            fontSize: 22,
-            textShadowRadius: 2
+            flexDirection: "row",
+            flex: 1,
+            alignItems: "space-between"
           }}
         >
-          Ingrese el código del producto:
-        </Text>
-        <Image
-          style={{ height: 180, width: 180, marginVertical: 20 }}
-          source={{
-            uri:
-              "https://cdn4.iconfinder.com/data/icons/business-marketing-colors-set-1/91/Business_Marketing_56-512.png"
-          }}
+          <View style={{ flex: 0.5, marginRight: 10 }}>
+            <Field
+              name="precioVentaMayorista"
+              label="Precio mayorista"
+              component={field}
+              ph="Ej: 110.50"
+            />
+          </View>
+          <View style={{ flex: 0.5, marginLeft: 10 }}>
+            <Field
+              name="precioVentaMinorista"
+              label="Precio minorista"
+              component={field}
+              ph="Ej: 180.50"
+            />
+          </View>
+        </View>
+        <Field
+          name="cantidadContiene"
+          label="Cantidad en stock actual"
+          component={field}
+          ph="Ej: 50"
         />
-        <SmoothPinCodeInput
-          cellStyle={{
-            borderBottomWidth: 2,
-            borderColor: "gray"
-          }}
-          cellStyleFocused={{
-            borderColor: "black"
-          }}
-          codeLength={11}
-          cellSpacing={5}
-          cellSize={22}
-          autoFocus
-          restrictToNumbers
-          //value={code}
-          //onTextChange={code => this.setState({ code })}
-        />
-        <Fab
-          disabled={validate}
-          style={{ backgroundColor: "#ef6e73" }}
-          position="bottomRight"
-          onPress={props.handleSubmit(props.validateBarcode)}
-        >
-          <Entypo name="chevron-right" />
-        </Fab>
-      </View>
-    </View>
+        <View style={{ flexDirection: "row-reverse", paddingVertical: 10 }}>
+          <View style={{ flex: 0.45 }}>
+            <Button
+              uppercase={false}
+              mode="contained"
+              style={
+                invalid || invalidPickers
+                  ? { backgroundColor: "grey" }
+                  : { backgroundColor: "#5d357c" }
+              }
+              disabled={invalid || invalidPickers}
+              onPress={props.handleSubmit(props.createNewProduct)}
+            >
+              Agregar producto
+            </Button>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

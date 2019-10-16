@@ -1,19 +1,25 @@
 // import liraries
 import React, { Component } from "react";
-import { View, Button, Text, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Button,
+  Image,
+  StyleSheet,
+  Dimensions,
+  Text
+} from "react-native";
 import Constants from "expo-constants";
-// import * as Permissions from "expo-permissions";
-import { Permissions } from "expo";
+import * as Permissions from "expo-permissions";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import PermisosCamara from "./PermisosCamara";
 import PermissionsDenied from "./PermissionsDenied";
 import { searchBarcode } from "../../../Redux/Actions/actionCarrito";
 import { connect } from "react-redux";
-import EnfoqueEscaner from "./EnfoqueEscaner";
 import { Fab } from "native-base";
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import { Badge } from "react-native-elements";
 import ModalBarCodeNotFound from "./ModalBarCodeNotFound";
+import THEME from "../../GlobalUtils/THEME";
 
 // create a component
 class LeerProductos extends Component {
@@ -28,14 +34,15 @@ class LeerProductos extends Component {
 
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === "granted" });
+    await this.setState({ hasCameraPermission: status === "granted" });
   }
 
   render() {
     const { navigation } = this.props;
+
     const askPermissions = async () => {
       const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      this.setState({ hasCameraPermission: status === "granted" });
+      await this.setState({ hasCameraPermission: status === "granted" });
     };
 
     const { hasCameraPermission, scanned } = this.state;
@@ -48,26 +55,12 @@ class LeerProductos extends Component {
     }
 
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "flex-end",
-          flexDirection: "column"
-          // backgroundColor: "rgba(68, 68, 68, 0.6)"
-        }}
-      >
+      <View style={styles.container}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-          style={[StyleSheet.absoluteFill, styles.container]}
+          style={[StyleSheet.absoluteFillObject, styles.barcodeScanner]}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginHorizontal: 15,
-              marginVertical: 10
-            }}
-          >
+          <View style={styles.goBack}>
             <AntDesign
               name="arrowleft"
               size={24}
@@ -76,31 +69,22 @@ class LeerProductos extends Component {
               onPress={() => navigation.goBack()}
             />
 
-            <Text
-              style={{
-                color: "white",
-                fontWeight: "400",
-                fontSize: 18,
-                marginVertical: 10,
-                marginHorizontal: 10,
-
-                textShadowColor: "rgba(93, 53, 124, 0.5)",
-                textShadowOffset: {
-                  width: 2,
-                  height: 2
-                },
-
-                textShadowRadius: 2
-              }}
-            >
-              Escanear Productos
-            </Text>
+            <Text style={styles.text}>Escanear Productos</Text>
           </View>
+          <Image
+            style={{
+              height: 330,
+              width: 330
+            }}
+            source={{
+              // uri: "http://cdn.onlinewebfonts.com/svg/img_410303.png"
+              uri: "http://cdn.onlinewebfonts.com/svg/img_410303.png"
+            }}
+          ></Image>
 
-          <EnfoqueEscaner />
           <Fab
             active
-            style={{ backgroundColor: "#5d357c" }}
+            style={styles.fab}
             position="bottomRight"
             onPress={() => {
               this.props.openCart();
@@ -114,36 +98,22 @@ class LeerProductos extends Component {
                 size={30}
               />
               <Badge
-                containerStyle={{
-                  position: "absolute",
-                  top: -8,
-                  right: -6
-                }}
+                containerStyle={styles.badgeContainer}
                 value={this.props.cartProducts.length}
-                badgeStyle={{
-                  paddingVertical: 10,
-                  paddingHorizontal: 2,
-                  borderColor: "rgba(0, 0, 0, 0)",
-                  backgroundColor: "#C51162"
-                }}
+                badgeStyle={styles.badgeStyle}
                 status="primary"
                 textStyle={{ fontWeight: "700", fontSize: 14 }}
               />
             </View>
           </Fab>
         </BarCodeScanner>
-
-        {/* {scanned && (
-          <Button
-            title={"Escanear de nuevo"}
-            onPress={() => this.setState({ scanned: false })}
-          />
-        )} */}
+        {this.state.scanned ? <Text>HOLA</Text> : null}
       </View>
     );
   }
 
   handleBarCodeScanned = ({ type, data }) => {
+    console.log("escaneadooooo");
     this.setState({ scanned: true });
     //let data = "7790272001005";
     this.props.searchBarcode(data, this.props.productos);
@@ -158,7 +128,7 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   searchBarcode: (code, products) => {
     dispatch(searchBarcode(code, products));
   },
@@ -170,8 +140,68 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
+const { width } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
-  container: {}
+  badgeStyle: {
+    paddingVertical: 10,
+    paddingHorizontal: 2,
+    borderColor: "rgba(0, 0, 0, 0)",
+    backgroundColor: "#C51162"
+  },
+  badgeContainer: {
+    position: "absolute",
+    top: -8,
+    right: -6
+  },
+  fab: {
+    backgroundColor: "#5d357c",
+    marginBottom: 8
+  },
+  text: {
+    color: "white",
+    fontWeight: "400",
+    fontSize: 18,
+    marginVertical: 10,
+    marginHorizontal: 10,
+
+    textShadowColor: "rgba(93, 53, 124, 0.5)",
+    textShadowOffset: {
+      width: 2,
+      height: 2
+    },
+
+    textShadowRadius: 2
+  },
+  goBack: {
+    flexDirection: "row",
+    alignItems: "center",
+    position: "absolute",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    top: 0,
+    left: 0,
+    backgroundColor: THEME.scannerBackgroundColor,
+    width: width
+    // flex: 19
+  },
+  container: {
+    flexDirection: "column",
+    // justifyContent: "center",
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 1)",
+    marginBottom: 0
+
+    // alignItems: "center"
+  },
+  barcodeScanner: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: THEME.scannerBackgroundColor,
+    flex: 1
+    // paddingBottom: 60
+  }
 });
 
 export default connect(

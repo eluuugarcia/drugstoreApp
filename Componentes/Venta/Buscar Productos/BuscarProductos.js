@@ -31,8 +31,17 @@ class BuscarProductos extends Component {
     search: ""
   };
 
-  componentDidMount() {
-    this.props.getProductos();
+  componentDidUpdate() {
+    if (this.props.showPagoVenta) {
+      const { navigation } = this.props;
+      this.props.closeCart();
+      navigation.navigate("PagoVenta");
+      this.props.hidePagoVenta();
+    }
+  }
+
+  async componentDidMount() {
+    await this.props.getProductos();
     this.searchInput.focus();
     this.searchInput.blur();
   }
@@ -43,10 +52,10 @@ class BuscarProductos extends Component {
     return item.producto.idProducto.toString();
   }
 
-  searchFilterFunction = text => {
+  searchFilterFunction = (text) => {
     if (text.length > 0) {
       this.setState({ initSearch: true });
-      const searchProducts = this.props.productos.filter(item => {
+      const searchProducts = this.props.productos.filter((item) => {
         const itemName = item.producto.nombre.toLowerCase();
         const itemID = item.producto.idProducto.toString().toLowerCase();
         const textSearch = text.toLowerCase();
@@ -74,7 +83,7 @@ class BuscarProductos extends Component {
     return (
       <Container style={{ backgroundColor: "#f2f2f2" }}>
         <SearchBar
-          ref={searchInput => (this.searchInput = searchInput)}
+          ref={(searchInput) => (this.searchInput = searchInput)}
           value={this.state.search}
           platform="android"
           placeholder="Buscar productos..."
@@ -83,7 +92,9 @@ class BuscarProductos extends Component {
           inputContainerStyle={{ backgroundColor: "#5d357c" }}
           inputStyle={{ color: "white" }}
           showLoading={false}
-          onChangeText={text => this.searchFilterFunction(text)}
+          onChangeText={(text) => {
+            this.searchFilterFunction(text);
+          }}
           clearIcon={
             <MaterialIcons
               active
@@ -213,16 +224,23 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
     productos: state.reducerProductos.productos,
-    cartProducts: state.reducerCarrito.cart
+    cartProducts: state.reducerCarrito.cart,
+    showPagoVenta: state.reducerVenta.showPagoVenta
   };
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getProductos: () => {
     dispatch({ type: "GET_PRODUCTOS" });
   },
   openCart: () => {
     dispatch({ type: "OPEN_CART" });
+  },
+  closeCart: () => {
+    dispatch({ type: "CLOSE_CART" });
+  },
+  hidePagoVenta: () => {
+    dispatch({ type: "HIDE_PAGO_VENTA" });
   }
 });
 

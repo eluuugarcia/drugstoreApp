@@ -8,16 +8,7 @@ function CartWithProducts(props) {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.totalContainer}>
-        <Text
-          style={{
-            fontSize: 40,
-            fontWeight: "bold",
-            color: "#666",
-            marginLeft: 15
-          }}
-        >
-          ${props.total}
-        </Text>
+        <Text style={styles.totalText}>${props.total}</Text>
       </View>
       <CartProductList products={props.cartProducts} total={props.total} />
       <View style={styles.buttonsContainer}>
@@ -26,12 +17,15 @@ function CartWithProducts(props) {
           mode="contained"
           onPress={() => {
             props.cleanCart();
-            //props.closeCart();
           }}
         >
           <MaterialIcons name="delete" color="#fff" size={22} />
         </Button>
-        <Button style={styles.continuousButton} mode="contained">
+        <Button
+          style={styles.continuousButton}
+          mode="contained"
+          onPress={() => props.goToPagoVenta()}
+        >
           <Entypo name="check" color="#fff" size={22} />
         </Button>
       </View>
@@ -73,6 +67,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 0,
     borderTopLeftRadius: 0
+  },
+  totalText: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "#666",
+    marginLeft: 15
   }
 });
 
